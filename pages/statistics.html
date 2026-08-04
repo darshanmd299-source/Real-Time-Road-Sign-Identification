@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Statistics | BharatSign AI</title>
+  <meta name="description" content="Evaluation Metrics, Accuracy/Loss Curves, and Confusion Matrix for Indian Traffic Sign AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/glassmorphism.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
+        <span>BharatSign<span style="color: var(--accent-orange-bright);">.AI</span></span>
+      </a>
+      <ul class="nav-links" id="navMenu">
+        <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="dataset.html" class="nav-link">Dataset</a></li>
+        <li><a href="model-details.html" class="nav-link">Model Details</a></li>
+        <li><a href="statistics.html" class="nav-link active">Statistics</a></li>
+        <li><a href="about.html" class="nav-link">About Project</a></li>
+        <li><a href="settings.html" class="nav-link">Settings</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions"><a href="dashboard.html" class="btn btn-primary-orange btn-sm">Start Detection</a></div>
+    </div>
+  </header>
+
+  <section id="analytics" class="container" style="padding-top: 7rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">Model Performance</span></div>
+      <h2 class="section-title">CNN Model <span class="text-gradient-blue">Statistics & Benchmarks</span></h2>
+      <p class="section-desc">Evaluation metrics, accuracy/loss training curves, and 5x5 class confusion matrix.</p>
+    </div>
+
+    <div class="stats-metrics-grid">
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon">🎯</div>
+        <div class="stat-card-val text-gradient-blue">99.4%</div>
+        <div class="stat-card-lbl">Model Accuracy</div>
+      </div>
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon" style="color: var(--accent-orange-bright); background: rgba(255,107,0,0.12);">⚡</div>
+        <div class="stat-card-val text-gradient-orange">98.9%</div>
+        <div class="stat-card-lbl">Precision Score</div>
+      </div>
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon" style="color: #34d399; background: rgba(52,211,153,0.12);">🔍</div>
+        <div class="stat-card-val" style="color: #34d399;">99.1%</div>
+        <div class="stat-card-lbl">Recall Rate</div>
+      </div>
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon" style="color: #a855f7; background: rgba(168,85,247,0.12);">📈</div>
+        <div class="stat-card-val" style="color: #c084fc;">99.0%</div>
+        <div class="stat-card-lbl">F1 Score</div>
+      </div>
+    </div>
+
+    <div class="graphs-dual-grid">
+      <div class="glass-panel chart-card">
+        <div class="chart-header">
+          <div><h3 style="color: #ffffff; font-size: 1.1rem;">Training & Validation Accuracy</h3><p style="font-size: 0.85rem;">Accuracy evolution over 50 training epochs</p></div>
+          <span class="badge badge-blue">Epochs 0 - 50</span>
+        </div>
+        <div class="chart-canvas-wrapper"><canvas id="accuracyChartCanvas"></canvas></div>
+      </div>
+
+      <div class="glass-panel chart-card">
+        <div class="chart-header">
+          <div><h3 style="color: #ffffff; font-size: 1.1rem;">Training & Validation Loss</h3><p style="font-size: 0.85rem;">Categorical cross-entropy loss convergence</p></div>
+          <span class="badge badge-orange">Loss: 0.03</span>
+        </div>
+        <div class="chart-canvas-wrapper"><canvas id="lossChartCanvas"></canvas></div>
+      </div>
+    </div>
+
+    <div class="glass-panel matrix-container-card tech-corners">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div><h3 style="color: #ffffff; font-size: 1.25rem;">Traffic Sign Confusion Matrix</h3><p style="font-size: 0.88rem; color: var(--text-muted);">True vs Predicted classification matrix across key IRC sign classes.</p></div>
+      </div>
+      <div class="matrix-grid-wrapper" id="confusionMatrixGrid"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom"><p>© 2026 BharatSign AI System • Real-Time Computer Vision Platform for Indian Highways & Smart Cities.</p></div>
+    </div>
+  </footer>
+
+  <script src="../js/telemetry.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

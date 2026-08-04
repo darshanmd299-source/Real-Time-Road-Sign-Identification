@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact & API Integration | BharatSign AI</title>
+  <meta name="description" content="Developer API Snippets & Inquiry Contact Form for BharatSign AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/glassmorphism.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
+        <span>BharatSign<span style="color: var(--accent-orange-bright);">.AI</span></span>
+      </a>
+      <ul class="nav-links" id="navMenu">
+        <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="dataset.html" class="nav-link">Dataset</a></li>
+        <li><a href="model-details.html" class="nav-link">Model Details</a></li>
+        <li><a href="statistics.html" class="nav-link">Statistics</a></li>
+        <li><a href="about.html" class="nav-link">About Project</a></li>
+        <li><a href="settings.html" class="nav-link">Settings</a></li>
+        <li><a href="contact.html" class="nav-link active">Contact</a></li>
+      </ul>
+      <div class="nav-actions"><a href="dashboard.html" class="btn btn-primary-orange btn-sm">Start Detection</a></div>
+    </div>
+  </header>
+
+  <section id="contact" class="container" style="padding-top: 7rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">Get In Touch</span></div>
+      <h2 class="section-title">Contact & <span class="text-gradient-blue">Integration</span></h2>
+      <p class="section-desc">Reach out for research collaboration, deployment licensing, or developer API keys.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="glass-panel contact-form-card">
+        <h3 style="color: #ffffff; margin-bottom: 1.25rem; font-size: 1.25rem;">Send Inquiry</h3>
+        <form id="contactForm" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent to the BharatSign AI team.');">
+          <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="e.g. Dr. Rajesh Sharma" required /></div>
+          <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="rajesh@iitb.ac.in" required /></div>
+          <div class="form-group"><label class="form-label">Message / API Key Request</label><textarea class="form-textarea" placeholder="Describe your deployment case..." required></textarea></div>
+          <button type="submit" class="btn btn-primary-blue btn-lg style-100" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+
+      <div id="api" class="api-card">
+        <div class="api-header">
+          <div class="code-tabs">
+            <button class="code-tab-btn active" data-lang="python">Python SDK</button>
+            <button class="code-tab-btn" data-lang="curl">REST API (cURL)</button>
+            <button class="code-tab-btn" data-lang="cpp">C++ TensorRT</button>
+          </div>
+          <button class="btn btn-glass btn-sm" id="copyCodeBtn">Copy Snippet</button>
+        </div>
+        <pre class="code-block" id="apiCodeDisplay"></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom"><p>© 2026 BharatSign AI System • Real-Time Computer Vision Platform for Indian Highways & Smart Cities.</p></div>
+    </div>
+  </footer>
+
+  <script src="../js/api-viewer.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

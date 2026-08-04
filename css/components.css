@@ -1,0 +1,1039 @@
+/* ==========================================================================
+   COMPONENT STYLES & LAYOUTS - TESLA AUTOPILOT & NVIDIA AI HUD
+   BharatSign AI - Commercial AI Software Grade Components
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. RESPONSIVE NAVBAR & ADAS HEADER
+   -------------------------------------------------------------------------- */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1rem 0;
+  transition: all var(--transition-normal);
+  background: rgba(4, 7, 15, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+}
+
+.navbar.scrolled {
+  padding: 0.65rem 0;
+  background: rgba(4, 7, 15, 0.92);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+  font-family: var(--font-family-mono);
+  letter-spacing: -0.02em;
+}
+
+.nav-logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent-blue-primary), var(--accent-nvidia-green));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #04070f;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  list-style: none;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--accent-blue-primary);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue-primary), var(--accent-nvidia-green));
+  box-shadow: 0 0 8px var(--accent-blue-primary);
+  border-radius: 2px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .nav-links {
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    background: rgba(4, 7, 15, 0.96);
+    backdrop-filter: blur(28px);
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border-glass);
+    transform: translateY(-150%);
+    transition: transform var(--transition-normal);
+  }
+  .nav-links.active {
+    transform: translateY(0);
+  }
+  .nav-toggle-btn {
+    display: block;
+  }
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. HERO SECTION & TESLA AUTOPILOT HUD METRICS
+   -------------------------------------------------------------------------- */
+.hero-section {
+  padding-top: 9.5rem;
+  padding-bottom: 5rem;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.hero-metrics-strip {
+  display: flex;
+  gap: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  font-family: var(--font-family-mono);
+  line-height: 1.2;
+}
+
+.metric-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-hud-card {
+  position: relative;
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+.hero-hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.hero-hud-screen {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  border: 1px solid var(--border-glass);
+}
+
+.hero-hud-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hero-title {
+    font-size: 2.3rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. OPERATOR DASHBOARD HUD & LIVE CAMERA PANEL
+   -------------------------------------------------------------------------- */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.webcam-interface-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.75rem;
+}
+
+.webcam-preview-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.preview-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.tab-group {
+  display: flex;
+  background: rgba(4, 7, 15, 0.6);
+  padding: 0.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-glass);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab-btn.active {
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--accent-blue-primary);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.preview-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000000;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+}
+
+#detectionCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.canvas-hud-overlay {
+  position: absolute;
+  top: 12px; left: 12px; right: 12px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.hud-pill {
+  background: rgba(4, 7, 15, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 0.3rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-glass);
+  font-family: var(--font-family-mono);
+  font-size: 0.78rem;
+  color: var(--accent-blue-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.preview-controls-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.camera-btn-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.webcam-meta-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.detected-sign-card {
+  padding: 1.25rem;
+}
+
+.detected-sign-layout {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.detected-svg-holder {
+  width: 80px;
+  height: 80px;
+  border-radius: 14px;
+  background: rgba(4, 7, 15, 0.8);
+  border: 1px solid var(--border-glass);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+.detected-sign-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.detected-sign-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.detected-sign-code {
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  color: var(--accent-blue-primary);
+}
+
+.confidence-card {
+  padding: 1.25rem;
+}
+
+.confidence-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.confidence-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.confidence-value {
+  font-family: var(--font-family-mono);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent-nvidia-glow);
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #76b900, #00ff88);
+  border-radius: 4px;
+  box-shadow: 0 0 10px #00ff88;
+  transition: width 0.35s ease;
+}
+
+.sub-meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.prediction-time-card, .detection-status-card {
+  padding: 1rem;
+}
+
+.prediction-time-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.prediction-time-val {
+  font-family: var(--font-family-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--accent-blue-primary);
+}
+
+.vehicle-action-card {
+  padding: 1.25rem;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid var(--border-orange-glass);
+  border-radius: 14px;
+}
+
+.action-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-orange-bright);
+  font-weight: 700;
+  font-size: 0.88rem;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.action-card-desc {
+  font-size: 0.92rem;
+  color: #f8fafc;
+  line-height: 1.5;
+}
+
+@media (max-width: 992px) {
+  .webcam-interface-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. DATASET SIGNS GRID & MODAL
+   -------------------------------------------------------------------------- */
+.explorer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  background: rgba(12, 19, 36, 0.6);
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  padding: 0.5rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--accent-blue-primary);
+  color: #ffffff;
+}
+
+.search-box {
+  position: relative;
+  min-width: 280px;
+}
+
+.search-input {
+  width: 100%;
+  background: rgba(12, 19, 36, 0.6);
+  border: 1px solid var(--border-glass);
+  color: #ffffff;
+  padding: 0.55rem 1rem 0.55rem 2.4rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+}
+
+.signs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.sign-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sign-code {
+  align-self: flex-start;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue-primary);
+  margin-bottom: 0.75rem;
+}
+
+.sign-preview {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.sign-card:hover .sign-preview {
+  transform: scale(1.1);
+}
+
+.sign-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.sign-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   5. HISTORY TABLE
+   -------------------------------------------------------------------------- */
+.history-table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.history-table th {
+  background: rgba(0, 240, 255, 0.06);
+  color: var(--accent-blue-primary);
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.history-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+}
+
+.history-table tr:hover td {
+  background: rgba(0, 240, 255, 0.04);
+}
+
+/* --------------------------------------------------------------------------
+   6. STATISTICS & CONFUSION MATRIX
+   -------------------------------------------------------------------------- */
+.stats-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card-animated {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card-val {
+  font-family: var(--font-family-mono);
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.stat-card-lbl {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+.graphs-dual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.chart-card {
+  padding: 1.5rem;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.chart-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 260px;
+}
+
+.chart-canvas-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 992px) {
+  .graphs-dual-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.matrix-container-card {
+  padding: 1.75rem;
+}
+
+.matrix-grid-wrapper {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+}
+
+.matrix-table th {
+  padding: 0.75rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.matrix-table td {
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.matrix-cell {
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.diagonal-match {
+  background: rgba(0, 240, 255, 0.25);
+  color: #00f0ff;
+  border: 1px solid var(--accent-blue-primary);
+}
+
+/* --------------------------------------------------------------------------
+   7. ABOUT PAGE & TIMELINE
+   -------------------------------------------------------------------------- */
+.about-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+}
+
+.about-card-detailed {
+  padding: 1.75rem;
+}
+
+.about-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.about-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(0, 240, 255, 0.12);
+  border: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--accent-blue-primary);
+}
+
+.about-card-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.about-card-text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   8. SETTINGS PAGE
+   -------------------------------------------------------------------------- */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.settings-card {
+  padding: 1.75rem;
+}
+
+.setting-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.setting-item-row:last-child {
+  border-bottom: none;
+}
+
+.setting-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.setting-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.switch-label {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+
+.switch-label input {
+  opacity: 0;
+  width: 0; height: 0;
+}
+
+.slider-toggle {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 34px;
+  transition: 0.3s;
+}
+
+.slider-toggle::before {
+  position: absolute;
+  content: "";
+  height: 20px; width: 20px;
+  left: 4px; bottom: 4px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider-toggle {
+  background-color: var(--accent-nvidia-green);
+}
+
+input:checked + .slider-toggle::before {
+  transform: translateX(24px);
+}
+
+.setting-select {
+  background: rgba(4, 7, 15, 0.8);
+  border: 1px solid var(--border-glass);
+  color: #ffffff;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  outline: none;
+  font-family: var(--font-family-mono);
+}
+
+.range-slider-input {
+  width: 100%;
+  accent-color: var(--accent-blue-primary);
+}
+
+/* --------------------------------------------------------------------------
+   9. CONTACT & API VIEWER
+   -------------------------------------------------------------------------- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2rem;
+}
+
+.contact-form-card {
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  background: rgba(4, 7, 15, 0.8);
+  border: 1px solid var(--border-glass);
+  color: #ffffff;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  outline: none;
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.api-card {
+  background: rgba(4, 7, 15, 0.9);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.api-header {
+  background: rgba(12, 19, 36, 0.8);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.code-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.code-tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-family-mono);
+}
+
+.code-tab-btn.active {
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--accent-blue-primary);
+}
+
+.code-block {
+  padding: 1.5rem;
+  font-family: var(--font-family-mono);
+  font-size: 0.85rem;
+  color: #38bdf8;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------------- */
+.footer {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid rgba(0, 240, 255, 0.1);
+  background: rgba(4, 7, 15, 0.95);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.footer-col h4 {
+  color: #ffffff;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-family-mono);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--accent-blue-primary);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

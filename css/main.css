@@ -1,0 +1,192 @@
+/* ==========================================================================
+   MAIN DESIGN SYSTEM & COLOR PALETTE - TESLA AUTOPILOT & NVIDIA AI ADAS THEME
+   BharatSign AI - Commercial AI Software Grade
+   ========================================================================== */
+
+:root {
+  /* Core Color System */
+  --bg-main: #04070f;
+  --bg-secondary: #080d1a;
+  --bg-card: rgba(12, 19, 36, 0.65);
+  --bg-card-hover: rgba(18, 28, 52, 0.85);
+
+  /* Tesla & NVIDIA Accent Colors */
+  --accent-blue-primary: #00f0ff;       /* Cyber Cyan / Tesla Autopilot */
+  --accent-nvidia-green: #76b900;      /* NVIDIA AI Green */
+  --accent-nvidia-glow: #00ff88;       /* High-Vis AI Glow */
+  --accent-orange-bright: #ff6b00;     /* Safety Warning Orange */
+  --accent-red-alert: #ef4444;         /* Mandatory Stop Red */
+  --accent-purple-ai: #a855f7;          /* Neural Network Purple */
+
+  /* Text & Typography */
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --font-family-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+
+  /* Glassmorphism & Borders */
+  --border-glass: rgba(0, 240, 255, 0.15);
+  --border-glass-hover: rgba(0, 240, 255, 0.45);
+  --border-nvidia-glass: rgba(118, 185, 0, 0.3);
+  --border-orange-glass: rgba(255, 107, 0, 0.3);
+  --shadow-glow-blue: 0 0 25px rgba(0, 240, 255, 0.25);
+  --shadow-glow-green: 0 0 25px rgba(0, 255, 136, 0.25);
+  --shadow-glow-orange: 0 0 25px rgba(255, 107, 0, 0.25);
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Mode Overrides (High-Contrast White Theme) */
+body.light-mode {
+  --bg-main: #f1f5f9;
+  --bg-secondary: #e2e8f0;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+  --border-glass: rgba(0, 163, 255, 0.3);
+  --border-glass-hover: rgba(0, 163, 255, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   GLOBAL RESETS & TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(118, 185, 0, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(255, 107, 0, 0.05) 0%, transparent 50%),
+    linear-gradient(rgba(4, 7, 15, 0.95), rgba(4, 7, 15, 0.95));
+  background-attachment: fixed;
+  color: var(--text-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Cyber Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(4, 7, 15, 0.9);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-blue-primary), var(--accent-nvidia-green));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-orange-bright);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Gradients & Text Effects */
+.text-gradient-blue {
+  background: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-orange {
+  background: linear-gradient(135deg, #ff6b00 0%, #ff0055 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-nvidia {
+  background: linear-gradient(135deg, #76b900 0%, #00ff88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-dual {
+  background: linear-gradient(135deg, #00f0ff 0%, #00ff88 50%, #ff6b00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Status Dots */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--text-dim);
+  display: inline-block;
+}
+
+.status-dot.active {
+  background-color: var(--accent-nvidia-glow);
+  box-shadow: 0 0 10px var(--accent-nvidia-glow);
+}
+
+.status-dot-pulse {
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+}
+
+/* Section Common Headers */
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-tag {
+  display: inline-flex;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.section-desc {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.9rem;
+  }
+  .section-desc {
+    font-size: 0.95rem;
+  }
+}

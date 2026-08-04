@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Project | BharatSign AI</title>
+  <meta name="description" content="Engineering Overview, Methodology, CNN Architecture, and Development Roadmap for BharatSign AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/glassmorphism.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
+        <span>BharatSign<span style="color: var(--accent-orange-bright);">.AI</span></span>
+      </a>
+      <ul class="nav-links" id="navMenu">
+        <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="dataset.html" class="nav-link">Dataset</a></li>
+        <li><a href="model-details.html" class="nav-link">Model Details</a></li>
+        <li><a href="statistics.html" class="nav-link">Statistics</a></li>
+        <li><a href="about.html" class="nav-link active">About Project</a></li>
+        <li><a href="settings.html" class="nav-link">Settings</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions"><a href="dashboard.html" class="btn btn-primary-orange btn-sm">Start Detection</a></div>
+    </div>
+  </header>
+
+  <section id="about" class="container" style="padding-top: 7rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-orange">Engineering Overview</span></div>
+      <h2 class="section-title">About <span class="text-gradient-orange">BharatSign AI</span></h2>
+      <p class="section-desc">Pioneering real-time computer vision technology tailored for Indian road infrastructure, ADAS safety, and traffic enforcement.</p>
+    </div>
+
+    <div class="about-sections-grid">
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header"><div class="about-card-icon">🚀</div><h3 class="about-card-title">1. Project Introduction</h3></div>
+        <p class="about-card-text"><strong>BharatSign AI</strong> is a sub-12ms deep learning computer vision system engineered for Indian road traffic sign identification and collision avoidance integrating IRC:67-2012 guidelines.</p>
+      </div>
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header"><div class="about-card-icon" style="color: var(--accent-orange-bright);">⚠️</div><h3 class="about-card-title">2. Problem Statement</h3></div>
+        <p class="about-card-text">Indian highways present challenging vision environments—occlusion from heavy trucks, dust, monsoon fog, and non-standard mounting heights.</p>
+      </div>
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header"><div class="about-card-icon" style="color: #34d399;">🎯</div><h3 class="about-card-title">3. Objectives</h3></div>
+        <p class="about-card-text">Deploy end-to-end CNN architecture targeting >99% mAP accuracy at 120 FPS on edge hardware with legal fine warnings.</p>
+      </div>
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header"><div class="about-card-icon" style="color: #c084fc;">🔬</div><h3 class="about-card-title">4. Methodology</h3></div>
+        <p class="about-card-text">Pipeline passes 1080p camera frames through CLAHE filtering, single-pass YOLOv8 bounding box regression, and TensorRT FP16 quantization.</p>
+      </div>
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header"><div class="about-card-icon">🧠</div><h3 class="about-card-title">5. CNN Architecture</h3></div>
+        <p class="about-card-text">YOLOv8 backbone fused with MobileNetV3 inverted residual blocks and Feature Pyramid Networks (FPN) for micro-sign detection.</p>
+      </div>
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header"><div class="about-card-icon" style="color: var(--accent-blue-primary);">⚙️</div><h3 class="about-card-title">6. Working Principle</h3></div>
+        <p class="about-card-text">Camera stream triggers bounding box anchors matching 48 IRC class embeddings in sub-12ms with warning speech chimes.</p>
+      </div>
+      <div class="glass-panel about-card-detailed tech-corners" style="grid-column: 1 / -1;">
+        <div class="about-card-header"><div class="about-card-icon" style="color: #38bdf8;">🌐</div><h3 class="about-card-title">7. Future Scope & Autonomous Vehicle Integration</h3></div>
+        <p class="about-card-text">3D LiDAR point cloud fusion, V2X cellular broadcasting, automated speed-governor throttling, and NHAI smart toll plaza integration.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom"><p>© 2026 BharatSign AI System • Real-Time Computer Vision Platform for Indian Highways & Smart Cities.</p></div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operator Dashboard | BharatSign AI</title>
+  <meta name="description" content="Live Webcam Computer Vision Telemetry Dashboard for Real-Time Indian Traffic Sign Identification." />
+  <meta name="theme-color" content="#070a12" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/glassmorphism.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+</head>
+<body>
+
+  <!-- AI Loader Overlay -->
+  <div id="aiLoaderOverlay" class="ai-loader-backdrop">
+    <div class="glass-panel-heavy ai-loader-box tech-corners">
+      <div class="loader-scanner-ring"><div class="scanner-dot"></div></div>
+      <div class="loader-status-title text-gradient-dual" id="aiLoaderText">Loading CNN Model...</div>
+      <div class="loader-progress-bar"><div class="loader-progress-fill" id="aiLoaderFill"></div></div>
+      <div class="loader-sub-text" id="aiLoaderSubText">Loading TensorRT FP16 Weights</div>
+    </div>
+  </div>
+
+  <!-- Reusable Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+        </div>
+        <span>BharatSign<span style="color: var(--accent-orange-bright);">.AI</span></span>
+      </a>
+
+      <ul class="nav-links" id="navMenu">
+        <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+        <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+        <li><a href="dataset.html" class="nav-link">Dataset</a></li>
+        <li><a href="model-details.html" class="nav-link">Model Details</a></li>
+        <li><a href="statistics.html" class="nav-link">Statistics</a></li>
+        <li><a href="about.html" class="nav-link">About Project</a></li>
+        <li><a href="settings.html" class="nav-link">Settings</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="badge badge-blue" style="display: flex;">
+          <span class="status-dot active status-dot-pulse"></span>
+          <span class="hide-mobile">TensorRT Active</span>
+        </div>
+        <a href="dashboard.html" class="btn btn-primary-orange btn-sm">Start Detection</a>
+        <button class="nav-toggle-btn" id="navToggleBtn" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Operator Dashboard Container -->
+  <section id="dashboard" class="container" style="padding-top: 7rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">Operator HUD</span></div>
+      <h2 class="section-title">Live Vision <span class="text-gradient-blue">Operator Dashboard</span></h2>
+      <p class="section-desc">Real-time webcam computer vision telemetry, sign classification, and vehicle advisory system.</p>
+    </div>
+
+    <div class="dashboard-container">
+      <div class="webcam-interface-grid">
+        
+        <!-- Camera Preview Card -->
+        <div class="glass-panel webcam-preview-card tech-corners">
+          <div class="preview-header">
+            <div class="preview-title">
+              <span class="status-dot active status-dot-pulse" id="cameraStatusDot"></span>
+              <span id="cameraHeaderTitle">CAM_PREVIEW // SENSOR_NODE_01</span>
+            </div>
+            <div class="tab-group">
+              <button class="tab-btn source-tab-btn active" data-mode="simulated">Highway Stream</button>
+              <button class="tab-btn source-tab-btn" data-mode="webcam">Webcam</button>
+              <button class="tab-btn source-tab-btn" data-mode="uploaded">Upload Photo</button>
+            </div>
+          </div>
+
+          <div class="preview-viewport">
+            <canvas id="detectionCanvas"></canvas>
+
+            <div id="fileUploadArea" style="display: none; position: absolute; inset: 0; background: rgba(7, 10, 18, 0.92); backdrop-filter: blur(12px); display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--accent-blue-primary); border-radius: 12px; margin: 1rem; cursor: pointer; text-align: center; padding: 2rem;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue-primary)" stroke-width="1.5" style="margin-bottom: 1rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <h4 style="color: #ffffff; margin-bottom: 0.5rem;">Click or Drag & Drop Indian Traffic Road Image</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Supports JPG, PNG, WEBP (Max 15MB)</p>
+              <input type="file" id="imageFileInput" accept="image/*" style="display: none;" />
+            </div>
+
+            <div class="canvas-hud-overlay">
+              <div class="hud-pill"><span class="status-dot active"></span><span id="hudFpsVal">60 FPS</span></div>
+              <div class="hud-pill" style="border-color: rgba(255, 107, 0, 0.3); color: var(--accent-orange-bright);">
+                <span>LATENCY:</span><span id="hudLatencyVal">12 ms</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-controls-footer">
+            <div class="camera-btn-group">
+              <button class="btn btn-primary-blue btn-sm" id="startCamBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Start Camera
+              </button>
+              <button class="btn btn-glass btn-sm" id="stopCamBtn" style="border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="6" width="12" height="12"></rect></svg>
+                Stop Camera
+              </button>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <label style="font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+                <span>Box Style:</span>
+                <select id="boxStyleSelect" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-glass); color: var(--text-main); padding: 0.35rem 0.65rem; border-radius: 8px; font-size: 0.8rem; outline: none; font-family: var(--font-family-mono);">
+                  <option value="neon">Neon Glow</option>
+                  <option value="corners">Tech Corners</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry Cards -->
+        <div class="webcam-meta-grid">
+          <div class="glass-panel detected-sign-card">
+            <div style="font-size: 0.78rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+              <span>Current Detected Sign</span>
+              <span class="badge badge-red" id="dashSignBadge">Mandatory</span>
+            </div>
+
+            <div class="detected-sign-layout">
+              <div class="detected-svg-holder" id="dashSignIcon">
+                <svg viewBox="0 0 100 100" width="100%" height="100%"><circle cx="50" cy="50" r="44" fill="#ef4444" stroke="#ffffff" stroke-width="10"/><text x="50" y="62" font-size="34" font-weight="900" font-family="Arial, sans-serif" fill="#0f172a" text-anchor="middle">50</text></svg>
+              </div>
+              <div class="detected-sign-info">
+                <div class="detected-sign-name" id="dashSignName">Speed Limit 50 km/h</div>
+                <div class="detected-sign-code" id="dashSignCode">IRC:67-2012 (Type M-08)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel confidence-card">
+            <div class="confidence-row">
+              <span class="confidence-label">Confidence %</span>
+              <span class="confidence-value" id="dashConfValue">99.2%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar-fill" id="dashConfBar" style="width: 99.2%;"></div>
+            </div>
+          </div>
+
+          <div class="sub-meta-row">
+            <div class="glass-panel prediction-time-card">
+              <div class="prediction-time-label">Prediction Time</div>
+              <div class="prediction-time-val" id="dashPredictionTime">8.4 ms</div>
+            </div>
+
+            <div class="glass-panel detection-status-card">
+              <div class="prediction-time-label">Detection Status</div>
+              <div class="stat-pill-value" style="color: #34d399; font-size: 1.15rem;" id="dashStatusBadge">
+                <span class="status-dot active status-dot-pulse"></span>
+                <span>ACTIVE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Voice Alert Controls Card -->
+          <div class="glass-panel voice-alert-card tech-corners" id="voiceAlertBannerCard" style="padding: 1.25rem; background: rgba(0, 240, 255, 0.04); border: 1px solid var(--border-glass);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.85rem; color: var(--accent-blue-primary);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <span>AI VOICE ALERT ENGINE</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-family-mono);">
+                  <span>VOL:</span>
+                  <input type="range" id="voiceVolumeSlider" min="0" max="1" step="0.05" value="0.85" style="width: 70px; accent-color: var(--accent-blue-primary);" />
+                  <span id="voiceVolValDisplay">85%</span>
+                </label>
+
+                <button id="voiceMuteToggleBtn" class="btn btn-glass btn-sm" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" title="Toggle Voice Alerts">
+                  <span id="voiceMuteIcon">🔊</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="voiceAlertBannerText" style="font-size: 0.92rem; font-weight: 700; color: #ffffff; font-family: var(--font-family-mono); background: rgba(4, 7, 15, 0.8); padding: 0.65rem 1rem; border-radius: 10px; border: 1px solid var(--border-glass);">
+              🗣️ "Warning! Stop sign detected. Apply brakes."
+            </div>
+          </div>
+
+          <div class="vehicle-action-card">
+            <div class="action-card-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <span>Recommended Vehicle Action</span>
+            </div>
+            <div class="action-card-desc" id="dashVehicleAction">
+              Reduce vehicle speed below 50 km/h immediately to comply with local speed limits and avoid penalties.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Panel Searchable Table -->
+      <div class="glass-panel panel-bottom tech-corners" style="margin-top: 2rem;">
+        <div class="history-header" style="flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange-bright)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <h3 style="color: #ffffff; font-size: 1.1rem;">Recent Detection History</h3>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+            <div style="position: relative;">
+              <input type="text" id="tableSearchInput" placeholder="Filter sign, action, time..." style="background: rgba(7, 10, 18, 0.8); border: 1px solid var(--border-glass); color: #ffffff; padding: 0.45rem 0.85rem 0.45rem 2rem; border-radius: 8px; font-size: 0.85rem; outline: none; width: 220px;" />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="2" style="position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+
+            <select id="tableStatusFilter" style="background: rgba(7, 10, 18, 0.8); border: 1px solid var(--border-glass); color: #ffffff; padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.85rem; outline: none; font-family: var(--font-family-mono);">
+              <option value="all">All Statuses</option>
+              <option value="Verified">Verified</option>
+              <option value="Advisory">Advisory</option>
+              <option value="Caution">Caution Zone</option>
+            </select>
+
+            <span class="badge badge-blue" id="historyCounterBadge">8 Records Captured</span>
+          </div>
+        </div>
+
+        <div class="history-table-wrapper">
+          <table class="history-table" id="detectionHistoryTable">
+            <thead>
+              <tr>
+                <th style="width: 120px;">Time</th>
+                <th style="width: 220px;">Traffic Sign</th>
+                <th style="width: 130px;">Confidence</th>
+                <th>Vehicle Action</th>
+                <th style="width: 140px;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Reusable Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 BharatSign AI System • Real-Time Computer Vision Platform for Indian Highways & Smart Cities.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/signs-db.js"></script>
+  <script src="../js/voice-alerts.js"></script>
+  <script src="../js/detection-engine.js"></script>
+  <script src="../js/telemetry.js"></script>
+  <script src="../js/api-viewer.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

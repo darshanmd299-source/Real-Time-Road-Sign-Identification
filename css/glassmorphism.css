@@ -1,0 +1,197 @@
+/* ==========================================================================
+   PREMIUM GLASSMORPHISM & CYBER HUD UTILITIES
+   Tesla Autopilot & NVIDIA DRIVE OS Design Language
+   ========================================================================== */
+
+/* Standard Glass Panel */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-glass-hover);
+  box-shadow: var(--shadow-glow-blue), 0 16px 48px rgba(0, 0, 0, 0.7);
+}
+
+/* Heavy Glass Panel (Preloader & Modals) */
+.glass-panel-heavy {
+  background: rgba(7, 12, 24, 0.88);
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 240, 255, 0.15);
+}
+
+/* Cyber Bracket Corner Accents */
+.tech-corners {
+  position: relative;
+}
+
+.tech-corners::before,
+.tech-corners::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.tech-corners::before {
+  top: 0; left: 0;
+  border-top: 2px solid var(--accent-blue-primary);
+  border-left: 2px solid var(--accent-blue-primary);
+}
+
+.tech-corners::after {
+  bottom: 0; right: 0;
+  border-bottom: 2px solid var(--accent-nvidia-green);
+  border-right: 2px solid var(--accent-nvidia-green);
+}
+
+.tech-corners:hover::before {
+  width: 16px; height: 16px;
+  border-color: var(--accent-nvidia-glow);
+  box-shadow: -2px -2px 10px var(--accent-nvidia-glow);
+}
+
+.tech-corners:hover::after {
+  width: 16px; height: 16px;
+  border-color: var(--accent-orange-bright);
+  box-shadow: 2px 2px 10px var(--accent-orange-bright);
+}
+
+/* Cyber Scanline Overlay */
+.scanline-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0, 240, 255, 0.03) 50%,
+    rgba(0, 240, 255, 0.03)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.6;
+}
+
+/* Cyber Pills & Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-blue {
+  background: rgba(0, 240, 255, 0.12);
+  color: #00f0ff;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+}
+
+.badge-nvidia {
+  background: rgba(118, 185, 0, 0.14);
+  color: #00ff88;
+  border: 1px solid rgba(118, 185, 0, 0.4);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
+}
+
+.badge-orange {
+  background: rgba(255, 107, 0, 0.12);
+  color: #ff6b00;
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  box-shadow: 0 0 12px rgba(255, 107, 0, 0.15);
+}
+
+.badge-red {
+  background: rgba(239, 68, 68, 0.14);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+}
+
+/* Premium Action Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  outline: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 8px;
+}
+
+.btn-lg {
+  padding: 0.9rem 2rem;
+  font-size: 1.05rem;
+  border-radius: 14px;
+}
+
+.btn-primary-blue {
+  background: linear-gradient(135deg, #00f0ff 0%, #0072ff 100%);
+  color: #04070f;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+}
+.btn-primary-blue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 240, 255, 0.55);
+}
+
+.btn-primary-orange {
+  background: linear-gradient(135deg, #ff6b00 0%, #ff0055 100%);
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(255, 107, 0, 0.35);
+}
+.btn-primary-orange:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 107, 0, 0.55);
+}
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(12px);
+}
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-glass-hover);
+  color: var(--accent-blue-primary);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}

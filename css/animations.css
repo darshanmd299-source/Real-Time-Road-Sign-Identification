@@ -1,0 +1,190 @@
+/* ==========================================================================
+   AI LOADING ANIMATIONS & CYBER SCANNER KEYFRAMES
+   BharatSign AI - Modern Animations & Radar Scan Overlay
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. AI LOADER BACKDROP & CONTAINER
+   -------------------------------------------------------------------------- */
+.ai-loader-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(4, 7, 15, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.ai-loader-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ai-loader-box {
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   2. ROTATING RADAR SCANNER RING
+   -------------------------------------------------------------------------- */
+.loader-scanner-ring {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 240, 255, 0.2);
+  position: relative;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+  animation: pulseRing 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.loader-scanner-ring::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--accent-blue-primary);
+  border-right-color: var(--accent-orange-bright);
+  animation: aiRadarScan 1.2s linear infinite;
+}
+
+.scanner-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-blue-primary), var(--accent-orange-bright));
+  box-shadow: 0 0 15px var(--accent-blue-primary);
+  animation: innerDotPulse 1s ease-in-out infinite alternate;
+}
+
+/* --------------------------------------------------------------------------
+   3. TEXT PROGRESSION & BAR
+   -------------------------------------------------------------------------- */
+.loader-status-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-mono);
+}
+
+.loader-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.loader-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00f0ff, #ff6b00);
+  border-radius: 4px;
+  transition: width 0.4s ease-out;
+  box-shadow: 0 0 12px var(--accent-blue-primary);
+}
+
+.loader-sub-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-family: var(--font-family-mono);
+  letter-spacing: 0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   4. KEYFRAME ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes aiRadarScan {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseRing {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
+}
+
+@keyframes innerDotPulse {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 20px var(--accent-orange-bright); }
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO BACKGROUND FLOATING ANIMATED SIGNS KEYFRAMES
+   -------------------------------------------------------------------------- */
+.bg-floating-sign {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.18;
+  filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.3));
+  z-index: 1;
+}
+
+.bg-sign-1 {
+  top: 15%; left: 8%; width: 70px; height: 70px;
+  animation: floatSign1 14s ease-in-out infinite alternate;
+}
+.bg-sign-2 {
+  top: 65%; left: 12%; width: 90px; height: 90px;
+  animation: floatSign2 18s ease-in-out infinite alternate;
+}
+.bg-sign-3 {
+  top: 20%; right: 10%; width: 80px; height: 80px;
+  animation: floatSign3 16s ease-in-out infinite alternate;
+}
+.bg-sign-4 {
+  top: 70%; right: 15%; width: 75px; height: 75px;
+  animation: floatSignSlow 22s ease-in-out infinite alternate;
+}
+.bg-sign-5 {
+  bottom: 8%; left: 45%; width: 65px; height: 65px;
+  animation: floatSign1 19s ease-in-out infinite alternate;
+}
+
+@keyframes floatSign1 {
+  0% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-25px) rotate(8deg) scale(1.05); }
+  100% { transform: translateY(15px) rotate(-6deg) scale(0.95); }
+}
+
+@keyframes floatSign2 {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-35px) rotate(-12deg); }
+}
+
+@keyframes floatSign3 {
+  0% { transform: translateY(0px) scale(1); }
+  100% { transform: translateY(30px) scale(1.1); }
+}
+
+@keyframes floatSignSlow {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-20px, -20px) rotate(15deg); }
+  100% { transform: translate(15px, 15px) rotate(-10deg); }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Settings | BharatSign AI</title>
+  <meta name="description" content="System Control & Preferences for BharatSign AI Traffic Sign Recognition System." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/glassmorphism.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
+        <span>BharatSign<span style="color: var(--accent-orange-bright);">.AI</span></span>
+      </a>
+      <ul class="nav-links" id="navMenu">
+        <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="dataset.html" class="nav-link">Dataset</a></li>
+        <li><a href="model-details.html" class="nav-link">Model Details</a></li>
+        <li><a href="statistics.html" class="nav-link">Statistics</a></li>
+        <li><a href="about.html" class="nav-link">About Project</a></li>
+        <li><a href="settings.html" class="nav-link active">Settings</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions"><a href="dashboard.html" class="btn btn-primary-orange btn-sm">Start Detection</a></div>
+    </div>
+  </header>
+
+  <section id="settings" class="container" style="padding-top: 7rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">System Control</span></div>
+      <h2 class="section-title">System <span class="text-gradient-blue">Settings & Configuration</span></h2>
+      <p class="section-desc">Customize UI theme, camera sensor selection, model detection threshold, and bilingual audio warnings.</p>
+    </div>
+
+    <div class="settings-grid">
+      <div class="glass-panel settings-card tech-corners">
+        <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 1.25rem;">Display & Appearance</h3>
+        <div class="setting-item-row">
+          <div class="setting-info"><div class="setting-title">Dark Mode Theme</div><div class="setting-desc">Cyber Dark mode with glassmorphism glows</div></div>
+          <label class="switch-label"><input type="checkbox" id="darkModeToggle" checked /><span class="slider-toggle"></span></label>
+        </div>
+        <div class="setting-item-row" style="flex-direction: column; align-items: flex-start; gap: 0.75rem;">
+          <div class="setting-info"><div class="setting-title">Camera Device Input</div><div class="setting-desc">Select active webcam or vehicle dashcam hardware</div></div>
+          <select id="cameraSelect" class="setting-select" style="width: 100%;">
+            <option value="default">Front Dashcam (Integrated WebCam)</option>
+            <option value="usb1">Secondary Road Sensor (USB Cam 02)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="glass-panel settings-card tech-corners">
+        <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 1.25rem;">Inference & Voice Alerts</h3>
+        <div class="setting-item-row" style="flex-direction: column; align-items: flex-start; gap: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+            <div class="setting-info"><div class="setting-title">Confidence Threshold Slider</div><div class="setting-desc">Minimum confidence percentage for bounding box trigger</div></div>
+            <span id="confSliderValueDisplay" style="font-family: var(--font-family-mono); font-size: 1.2rem; font-weight: 800; color: var(--accent-blue-primary);">75%</span>
+          </div>
+          <input type="range" id="confidenceThresholdSlider" class="range-slider-input" min="50" max="95" value="75" step="1" />
+        </div>
+        <div class="setting-item-row" style="flex-direction: column; align-items: flex-start; gap: 0.75rem;">
+          <div class="setting-info"><div class="setting-title">Voice Alert Language</div><div class="setting-desc">Bilingual speech synthesis engine (TTS)</div></div>
+          <select id="languageSelect" class="setting-select" style="width: 100%;">
+            <option value="en-IN">English (India) - Default</option>
+            <option value="hi-IN">Hindi (हिन्दी)</option>
+            <option value="mr-IN">Marathi (मराठी)</option>
+            <option value="ta-IN">Tamil (தமிழ்)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2.5rem; text-align: center;">
+      <button id="saveSettingsBtn" class="btn btn-primary-blue btn-lg" style="min-width: 240px;">Save Settings</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom"><p>© 2026 BharatSign AI System • Real-Time Computer Vision Platform for Indian Highways & Smart Cities.</p></div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

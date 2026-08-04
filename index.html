@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BharatSign AI | Real-Time Indian Traffic Sign Identification System</title>
+  <meta name="description" content="AI Powered Traffic Sign Recognition using CNN for Indian road traffic sign detection, collision warning, and voice alerts. Operating at 120 FPS with TensorRT optimization." />
+  <meta name="theme-color" content="#070a12" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/glassmorphism.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23070a12' stroke='%2300f0ff' stroke-width='8'/><polygon points='30,15 70,15 90,35 90,65 70,85 30,85 10,65 10,35' fill='%23ef4444'/><text x='50' y='58' font-size='22' font-weight='900' fill='%23ffffff' text-anchor='middle' font-family='sans-serif'>STOP</text></svg>" />
+</head>
+<body>
+
+  <!-- AI LOADING ANIMATION OVERLAY -->
+  <div id="aiLoaderOverlay" class="ai-loader-backdrop active">
+    <div class="glass-panel-heavy ai-loader-box tech-corners">
+      <div class="loader-scanner-ring"><div class="scanner-dot"></div></div>
+      <div class="loader-status-title text-gradient-dual" id="aiLoaderText">Loading CNN Model...</div>
+      <div class="loader-progress-bar"><div class="loader-progress-fill" id="aiLoaderFill"></div></div>
+      <div class="loader-sub-text" id="aiLoaderSubText">Loading TensorRT FP16 Weights & MobileNetV3 Backbone</div>
+    </div>
+  </div>
+
+  <!-- RESPONSIVE NAVIGATION BAR -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+        </div>
+        <span>BharatSign<span style="color: var(--accent-orange-bright);">.AI</span></span>
+      </a>
+
+      <ul class="nav-links" id="navMenu">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+        <li><a href="#dataset" class="nav-link">Dataset</a></li>
+        <li><a href="#architecture" class="nav-link">Model Details</a></li>
+        <li><a href="#analytics" class="nav-link">Statistics</a></li>
+        <li><a href="#about" class="nav-link">About Project</a></li>
+        <li><a href="#settings" class="nav-link">Settings</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="badge badge-blue" style="display: flex;">
+          <span class="status-dot active status-dot-pulse"></span>
+          <span class="hide-mobile">TensorRT Active</span>
+        </div>
+        <a href="#dashboard" class="btn btn-primary-orange btn-sm">Start Detection</a>
+        <button class="nav-toggle-btn" id="navToggleBtn" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="hero" class="hero-section" style="position: relative; overflow: hidden;">
+    
+    <div class="bg-floating-sign bg-sign-1">
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <polygon points="30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30" fill="#ef4444" stroke="#ffffff" stroke-width="4"/>
+        <text x="50" y="58" font-size="22" font-weight="900" font-family="Arial, sans-serif" fill="#ffffff" text-anchor="middle">STOP</text>
+      </svg>
+    </div>
+
+    <div class="bg-floating-sign bg-sign-2">
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <circle cx="50" cy="50" r="44" fill="#ffffff" stroke="#ef4444" stroke-width="10"/>
+        <text x="50" y="62" font-size="34" font-weight="900" font-family="Arial, sans-serif" fill="#0f172a" text-anchor="middle">50</text>
+      </svg>
+    </div>
+
+    <div class="bg-floating-sign bg-sign-3">
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <polygon points="50,8 94,88 6,88" fill="#ffffff" stroke="#ef4444" stroke-width="9"/>
+        <circle cx="42" cy="40" r="5" fill="#0f172a"/>
+        <path d="M42 45 L42 62 M42 50 L34 58 M42 50 L50 58 M42 62 L36 76 M42 62 L48 76" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="60" cy="48" r="4" fill="#0f172a"/>
+        <path d="M60 52 L60 66 M60 56 L54 62 M60 56 L66 62 M60 66 L55 76 M60 66 L65 76" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="bg-floating-sign bg-sign-4">
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <polygon points="50,92 8,15 92,15" fill="#ffffff" stroke="#ef4444" stroke-width="12"/>
+        <polygon points="50,82 16,22 84,22" fill="#ffffff"/>
+      </svg>
+    </div>
+
+    <div class="bg-floating-sign bg-sign-5">
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <circle cx="50" cy="50" r="44" fill="#ef4444" stroke="#ffffff" stroke-width="3"/>
+        <rect x="18" y="42" width="64" height="16" fill="#ffffff" rx="3"/>
+      </svg>
+    </div>
+
+    <div class="container hero-grid" style="position: relative; z-index: 2;">
+      <div class="hero-content">
+        <div class="hero-badge-wrapper">
+          <span class="badge badge-orange">
+            <span>🇮🇳 IRC:67-2012 Standards</span>
+            <span>•</span>
+            <span>CNN Vision Model</span>
+          </span>
+        </div>
+
+        <h1 class="hero-title">
+          Real-Time <span class="text-gradient-dual">Indian Traffic Sign</span> Identification System
+        </h1>
+
+        <p class="hero-subtitle" style="font-size: 1.25rem; color: #38bdf8; font-weight: 600;">
+          AI Powered Traffic Sign Recognition using CNN
+        </p>
+
+        <p class="hero-subtitle" style="font-size: 1rem; margin-top: -1.2rem; margin-bottom: 2.2rem; color: var(--text-muted);">
+          Sub-12ms deep learning computer vision model optimized for Indian road traffic signs, automatic speed warning advisories, and real-time voice alerts.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#dashboard" class="btn btn-primary-blue btn-lg ripple" id="heroStartDetectionBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            Start Detection
+          </a>
+          <a href="#dashboard" class="btn btn-glass btn-lg" id="heroViewDashboardBtn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+            View Dashboard
+          </a>
+        </div>
+
+        <div class="hero-metrics-strip">
+          <div class="metric-item">
+            <span class="metric-value text-gradient-blue">120 FPS</span>
+            <span class="metric-label">TensorRT Throughput</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-value text-gradient-orange">99.4%</span>
+            <span class="metric-label">CNN mAP@0.5 Accuracy</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-value" style="color: #34d399;">8.4 ms</span>
+            <span class="metric-label">Inference Latency</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-hud-card glass-panel-heavy float-animation">
+        <div class="scanline-overlay"></div>
+        <div class="hero-hud-header">
+          <div class="hud-title">
+            <span class="status-dot active"></span>
+            <span>LIVE TELEMETRY STREAM // SUB-NODE 01</span>
+          </div>
+          <span class="badge badge-blue">CNN YOLOv8-ITSR</span>
+        </div>
+
+        <div class="hero-hud-screen">
+          <img src="assets/hero-bg.png" alt="Indian Highway AI Radar Scan" class="hero-hud-img" id="heroHudBg" />
+
+          <div style="position: absolute; top: 28%; left: 52%; width: 140px; height: 140px; border: 2px solid #00f0ff; border-radius: 8px; box-shadow: 0 0 20px #00f0ff; background: rgba(0, 240, 255, 0.1);" class="box-pulse tech-corners">
+            <div style="position: absolute; top: -26px; left: 0; background: rgba(7, 10, 18, 0.9); padding: 2px 8px; border-radius: 4px; border: 1px solid #00f0ff; font-family: var(--font-family-mono); font-size: 11px; color: #00f0ff; font-weight: 700;">
+              M-04: Speed Limit 50 (99.2%)
+            </div>
+          </div>
+
+          <div style="position: absolute; bottom: 12px; left: 12px; right: 12px; background: rgba(7, 10, 18, 0.85); backdrop-filter: blur(8px); padding: 8px 14px; border-radius: 10px; border: 1px solid rgba(0, 240, 255, 0.2); display: flex; justify-content: space-between; align-items: center; font-family: var(--font-family-mono); font-size: 12px; color: var(--text-muted);">
+            <div>FRAME: <span style="color: #00f0ff;">1080p@60</span></div>
+            <div>VRAM: <span style="color: var(--accent-orange-bright);">1.8 GB</span></div>
+            <div>STATUS: <span style="color: #34d399;">OPTIMAL</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERATOR DASHBOARD -->
+  <section id="dashboard" class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">Operator HUD</span></div>
+      <h2 class="section-title">Live Vision <span class="text-gradient-blue">Operator Dashboard</span></h2>
+      <p class="section-desc">Real-time webcam computer vision telemetry, sign classification, and vehicle advisory system.</p>
+    </div>
+
+    <div class="dashboard-container">
+      <div class="webcam-interface-grid">
+        
+        <div class="glass-panel webcam-preview-card tech-corners">
+          <div class="preview-header">
+            <div class="preview-title">
+              <span class="status-dot active status-dot-pulse" id="cameraStatusDot"></span>
+              <span id="cameraHeaderTitle">CAM_PREVIEW // SENSOR_NODE_01</span>
+            </div>
+            <div class="tab-group">
+              <button class="tab-btn source-tab-btn active" data-mode="simulated">Highway Stream</button>
+              <button class="tab-btn source-tab-btn" data-mode="webcam">Webcam</button>
+              <button class="tab-btn source-tab-btn" data-mode="uploaded">Upload Photo</button>
+            </div>
+          </div>
+
+          <div class="preview-viewport">
+            <canvas id="detectionCanvas"></canvas>
+
+            <div id="fileUploadArea" style="display: none; position: absolute; inset: 0; background: rgba(7, 10, 18, 0.92); backdrop-filter: blur(12px); display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--accent-blue-primary); border-radius: 12px; margin: 1rem; cursor: pointer; text-align: center; padding: 2rem;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue-primary)" stroke-width="1.5" style="margin-bottom: 1rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <h4 style="color: #ffffff; margin-bottom: 0.5rem;">Click or Drag & Drop Indian Traffic Road Image</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">Supports JPG, PNG, WEBP (Max 15MB)</p>
+              <input type="file" id="imageFileInput" accept="image/*" style="display: none;" />
+            </div>
+
+            <div class="canvas-hud-overlay">
+              <div class="hud-pill">
+                <span class="status-dot active"></span>
+                <span id="hudFpsVal">60 FPS</span>
+              </div>
+              <div class="hud-pill" style="border-color: rgba(255, 107, 0, 0.3); color: var(--accent-orange-bright);">
+                <span>LATENCY:</span>
+                <span id="hudLatencyVal">12 ms</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-controls-footer">
+            <div class="camera-btn-group">
+              <button class="btn btn-primary-blue btn-sm" id="startCamBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Start Camera
+              </button>
+              <button class="btn btn-glass btn-sm" id="stopCamBtn" style="border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="6" width="12" height="12"></rect></svg>
+                Stop Camera
+              </button>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <label style="font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+                <span>Box Style:</span>
+                <select id="boxStyleSelect" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-glass); color: var(--text-main); padding: 0.35rem 0.65rem; border-radius: 8px; font-size: 0.8rem; outline: none; font-family: var(--font-family-mono);">
+                  <option value="neon">Neon Glow</option>
+                  <option value="corners">Tech Corners</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="webcam-meta-grid">
+          <div class="glass-panel detected-sign-card">
+            <div style="font-size: 0.78rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
+              <span>Current Detected Sign</span>
+              <span class="badge badge-red" id="dashSignBadge">Mandatory</span>
+            </div>
+
+            <div class="detected-sign-layout">
+              <div class="detected-svg-holder" id="dashSignIcon">
+                <svg viewBox="0 0 100 100" width="100%" height="100%"><circle cx="50" cy="50" r="44" fill="#ef4444" stroke="#ffffff" stroke-width="10"/><text x="50" y="62" font-size="34" font-weight="900" font-family="Arial, sans-serif" fill="#0f172a" text-anchor="middle">50</text></svg>
+              </div>
+              <div class="detected-sign-info">
+                <div class="detected-sign-name" id="dashSignName">Speed Limit 50 km/h</div>
+                <div class="detected-sign-code" id="dashSignCode">IRC:67-2012 (Type M-08)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel confidence-card">
+            <div class="confidence-row">
+              <span class="confidence-label">Confidence %</span>
+              <span class="confidence-value" id="dashConfValue">99.2%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar-fill" id="dashConfBar" style="width: 99.2%;"></div>
+            </div>
+          </div>
+
+          <div class="sub-meta-row">
+            <div class="glass-panel prediction-time-card">
+              <div class="prediction-time-label">Prediction Time</div>
+              <div class="prediction-time-val" id="dashPredictionTime">8.4 ms</div>
+            </div>
+
+            <div class="glass-panel detection-status-card">
+              <div class="prediction-time-label">Detection Status</div>
+              <div class="stat-pill-value" style="color: #34d399; font-size: 1.15rem;" id="dashStatusBadge">
+                <span class="status-dot active status-dot-pulse"></span>
+                <span>ACTIVE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Voice Alert Card & Controls -->
+          <div class="glass-panel voice-alert-card tech-corners" id="voiceAlertBannerCard" style="padding: 1.25rem; background: rgba(0, 240, 255, 0.04); border: 1px solid var(--border-glass);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.85rem; color: var(--accent-blue-primary);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <span>AI VOICE ALERT ENGINE</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-family-mono);">
+                  <span>VOL:</span>
+                  <input type="range" id="voiceVolumeSlider" min="0" max="1" step="0.05" value="0.85" style="width: 70px; accent-color: var(--accent-blue-primary);" />
+                  <span id="voiceVolValDisplay">85%</span>
+                </label>
+
+                <button id="voiceMuteToggleBtn" class="btn btn-glass btn-sm" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" title="Toggle Voice Alerts">
+                  <span id="voiceMuteIcon">🔊</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="voiceAlertBannerText" style="font-size: 0.92rem; font-weight: 700; color: #ffffff; font-family: var(--font-family-mono); background: rgba(4, 7, 15, 0.8); padding: 0.65rem 1rem; border-radius: 10px; border: 1px solid var(--border-glass);">
+              🗣️ "Warning! Stop sign detected. Apply brakes."
+            </div>
+          </div>
+
+          <div class="vehicle-action-card">
+            <div class="action-card-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <span>Recommended Vehicle Action</span>
+            </div>
+            <div class="action-card-desc" id="dashVehicleAction">
+              Reduce vehicle speed below 50 km/h immediately to comply with local speed limits and avoid penalties.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-panel panel-bottom tech-corners" style="margin-top: 2rem;">
+        <div class="history-header" style="flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange-bright)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <h3 style="color: #ffffff; font-size: 1.1rem;">Recent Detection History</h3>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+            <div style="position: relative;">
+              <input type="text" id="tableSearchInput" placeholder="Filter sign, action, time..." style="background: rgba(7, 10, 18, 0.8); border: 1px solid var(--border-glass); color: #ffffff; padding: 0.45rem 0.85rem 0.45rem 2rem; border-radius: 8px; font-size: 0.85rem; outline: none; width: 220px;" />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="2" style="position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+
+            <select id="tableStatusFilter" style="background: rgba(7, 10, 18, 0.8); border: 1px solid var(--border-glass); color: #ffffff; padding: 0.45rem 0.85rem; border-radius: 8px; font-size: 0.85rem; outline: none; font-family: var(--font-family-mono);">
+              <option value="all">All Statuses</option>
+              <option value="Verified">Verified</option>
+              <option value="Advisory">Advisory</option>
+              <option value="Caution">Caution Zone</option>
+            </select>
+
+            <span class="badge badge-blue" id="historyCounterBadge">8 Records Captured</span>
+          </div>
+        </div>
+
+        <div class="history-table-wrapper">
+          <table class="history-table" id="detectionHistoryTable">
+            <thead>
+              <tr>
+                <th style="width: 120px;">Time</th>
+                <th style="width: 220px;">Traffic Sign</th>
+                <th style="width: 130px;">Confidence</th>
+                <th>Vehicle Action</th>
+                <th style="width: 140px;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DATASET -->
+  <section id="dataset" class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-orange">IRC:67-2012 Standards</span></div>
+      <h2 class="section-title">Indian Traffic Sign <span class="text-gradient-orange">Knowledge Base</span></h2>
+      <p class="section-desc">Search and explore official Indian Roads Congress traffic signs with IRC classifications, legal penalties under Motor Vehicles Act, and training metrics.</p>
+    </div>
+
+    <div class="explorer-toolbar">
+      <div class="category-tabs">
+        <button class="category-btn active" data-category="all">
+          <span>All Traffic Signs</span>
+        </button>
+        <button class="category-btn" data-category="mandatory">
+          <span style="color: #ef4444;">🛑</span> Mandatory / Regulatory
+        </button>
+        <button class="category-btn" data-category="cautionary">
+          <span style="color: #f59e0b;">⚠️</span> Cautionary / Warning
+        </button>
+        <button class="category-btn" data-category="informational">
+          <span style="color: #3b82f6;">ℹ️</span> Informational
+        </button>
+      </div>
+
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="signSearchInput" class="search-input" placeholder="Search sign name, IRC code, rule..." />
+      </div>
+    </div>
+
+    <div class="signs-grid" id="signsGridContainer">
+    </div>
+  </section>
+
+  <!-- MODEL DETAILS PAGE -->
+  <section id="architecture" class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">CNN Model Architecture</span></div>
+      <h2 class="section-title">Model Specifications & <span class="text-gradient-blue">Hyperparameters</span></h2>
+      <p class="section-desc">Comprehensive neural network architecture, dataset split, optimization hyper-parameters, and loss formulation.</p>
+    </div>
+
+    <div class="model-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 240, 255, 0.12); color: var(--accent-blue-primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📁</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Dataset Used</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">ITSRD Dataset</div>
+        <div style="font-size: 0.82rem; color: var(--accent-blue-primary);">Indian Traffic Sign Recognition Dataset</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 107, 0, 0.12); color: var(--accent-orange-bright); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🛑</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Number of Classes</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">48 Classes</div>
+        <div style="font-size: 0.82rem; color: var(--accent-orange-bright);">IRC:67-2012 Road Standards</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(52, 211, 153, 0.12); color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🧠</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Model Name</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">YOLOv8-ITSR</div>
+        <div style="font-size: 0.82rem; color: #34d399;">CNN MobileNetV3 Backbone</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 240, 255, 0.12); color: var(--accent-blue-primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🖼️</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Training Images</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">31,500 Images</div>
+        <div style="font-size: 0.82rem; color: var(--accent-blue-primary);">70% Train Split (Augmented)</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 107, 0, 0.12); color: var(--accent-orange-bright); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📊</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Validation Images</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">6,750 Images</div>
+        <div style="font-size: 0.82rem; color: var(--accent-orange-bright);">15% Validation Split</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(168, 85, 247, 0.12); color: #c084fc; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🧪</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Testing Images</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">6,750 Images</div>
+        <div style="font-size: 0.82rem; color: #c084fc;">15% Test Holdout Set</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(52, 211, 153, 0.12); color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🔄</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Training Epochs</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">100 Epochs</div>
+        <div style="font-size: 0.82rem; color: #34d399;">Early Stopping at Epoch 82</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 240, 255, 0.12); color: var(--accent-blue-primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📦</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Batch Size</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">32 Dynamic</div>
+        <div style="font-size: 0.82rem; color: var(--accent-blue-primary);">Mixed Precision FP16</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 107, 0, 0.12); color: var(--accent-orange-bright); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">⚡</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Optimizer</span>
+        </div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">AdamW</div>
+        <div style="font-size: 0.82rem; color: var(--accent-orange-bright);">lr=0.001, weight_decay=0.01</div>
+      </div>
+
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+          <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(239, 68, 68, 0.12); color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📉</div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Loss Function</span>
+        </div>
+        <div style="font-size: 1.1rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">Cross-Entropy + Focal Loss</div>
+        <div style="font-size: 0.82rem; color: #ef4444;">CIoU Bounding Box Loss</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATISTICS PAGE -->
+  <section id="analytics" class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">Model Performance</span></div>
+      <h2 class="section-title">CNN Model <span class="text-gradient-blue">Statistics & Benchmarks</span></h2>
+      <p class="section-desc">Evaluation metrics, accuracy/loss training curves, and 5x5 class confusion matrix.</p>
+    </div>
+
+    <div class="stats-metrics-grid">
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon">🎯</div>
+        <div class="stat-card-val text-gradient-blue">99.4%</div>
+        <div class="stat-card-lbl">Model Accuracy</div>
+      </div>
+
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon" style="color: var(--accent-orange-bright); background: rgba(255,107,0,0.12);">⚡</div>
+        <div class="stat-card-val text-gradient-orange">98.9%</div>
+        <div class="stat-card-lbl">Precision Score</div>
+      </div>
+
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon" style="color: #34d399; background: rgba(52,211,153,0.12);">🔍</div>
+        <div class="stat-card-val" style="color: #34d399;">99.1%</div>
+        <div class="stat-card-lbl">Recall Rate</div>
+      </div>
+
+      <div class="glass-panel stat-card-animated tech-corners">
+        <div class="stat-card-icon" style="color: #a855f7; background: rgba(168,85,247,0.12);">📈</div>
+        <div class="stat-card-val" style="color: #c084fc;">99.0%</div>
+        <div class="stat-card-lbl">F1 Score</div>
+      </div>
+    </div>
+
+    <div class="graphs-dual-grid">
+      <div class="glass-panel chart-card">
+        <div class="chart-header">
+          <div>
+            <h3 style="color: #ffffff; font-size: 1.1rem;">Training & Validation Accuracy</h3>
+            <p style="font-size: 0.85rem;">Accuracy evolution over 50 training epochs</p>
+          </div>
+          <span class="badge badge-blue">Epochs 0 - 50</span>
+        </div>
+        <div class="chart-canvas-wrapper">
+          <canvas id="accuracyChartCanvas"></canvas>
+        </div>
+      </div>
+
+      <div class="glass-panel chart-card">
+        <div class="chart-header">
+          <div>
+            <h3 style="color: #ffffff; font-size: 1.1rem;">Training & Validation Loss</h3>
+            <p style="font-size: 0.85rem;">Categorical cross-entropy loss convergence</p>
+          </div>
+          <span class="badge badge-orange">Loss: 0.03</span>
+        </div>
+        <div class="chart-canvas-wrapper">
+          <canvas id="lossChartCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-panel matrix-container-card tech-corners">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h3 style="color: #ffffff; font-size: 1.25rem;">Traffic Sign Confusion Matrix</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">True vs Predicted classification matrix across key IRC sign classes.</p>
+        </div>
+      </div>
+
+      <div class="matrix-grid-wrapper" id="confusionMatrixGrid">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT PAGE -->
+  <section id="about" class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-orange">Engineering Overview</span></div>
+      <h2 class="section-title">About <span class="text-gradient-orange">BharatSign AI</span></h2>
+      <p class="section-desc">Pioneering real-time computer vision technology tailored for Indian road infrastructure, ADAS safety, and traffic enforcement.</p>
+    </div>
+
+    <div class="about-sections-grid">
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header">
+          <div class="about-card-icon">🚀</div>
+          <h3 class="about-card-title">1. Project Introduction</h3>
+        </div>
+        <p class="about-card-text">
+          <strong>BharatSign AI</strong> is a sub-12ms deep learning computer vision system engineered specifically for Indian road traffic sign identification and collision avoidance.
+        </p>
+      </div>
+
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header">
+          <div class="about-card-icon" style="color: var(--accent-orange-bright);">⚠️</div>
+          <h3 class="about-card-title">2. Problem Statement</h3>
+        </div>
+        <p class="about-card-text">
+          Indian highways present challenging vision environments—occlusion from heavy trucks, non-standard sign heights, dust, and monsoon fog.
+        </p>
+      </div>
+
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header">
+          <div class="about-card-icon" style="color: #34d399;">🎯</div>
+          <h3 class="about-card-title">3. Objectives</h3>
+        </div>
+        <p class="about-card-text">
+          Deploy an end-to-end CNN architecture targeting >99% mAP accuracy at 120 FPS on edge hardware, auto-generating legal fine warnings.
+        </p>
+      </div>
+
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header">
+          <div class="about-card-icon" style="color: #c084fc;">🔬</div>
+          <h3 class="about-card-title">4. Methodology</h3>
+        </div>
+        <p class="about-card-text">
+          Our pipeline passes 1080p camera frames through CLAHE filtering, runs single-pass CNN bounding box regression, and executes TensorRT FP16 quantization.
+        </p>
+      </div>
+
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header">
+          <div class="about-card-icon">🧠</div>
+          <h3 class="about-card-title">5. CNN Architecture</h3>
+        </div>
+        <p class="about-card-text">
+          Leveraging a hybrid YOLOv8 backbone fused with MobileNetV3 inverted residual blocks for micro-sign detection at high speeds.
+        </p>
+      </div>
+
+      <div class="glass-panel about-card-detailed tech-corners">
+        <div class="about-card-header">
+          <div class="about-card-icon" style="color: var(--accent-blue-primary);">⚙️</div>
+          <h3 class="about-card-title">6. Working Principle</h3>
+        </div>
+        <p class="about-card-text">
+          The camera stream triggers bounding box candidate anchors matching 48 IRC class embeddings in sub-12ms, triggering warning speech chimes.
+        </p>
+      </div>
+
+      <div class="glass-panel about-card-detailed tech-corners" style="grid-column: 1 / -1;">
+        <div class="about-card-header">
+          <div class="about-card-icon" style="color: #38bdf8;">🌐</div>
+          <h3 class="about-card-title">7. Future Scope & Autonomous Vehicle Integration</h3>
+        </div>
+        <p class="about-card-text">
+          Future expansion includes 3D LiDAR point cloud fusion, V2X cellular network broadcasting, and direct integration with NHAI smart toll plazas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETTINGS PAGE -->
+  <section id="settings" class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">System Control</span></div>
+      <h2 class="section-title">System <span class="text-gradient-blue">Settings & Configuration</span></h2>
+      <p class="section-desc">Customize UI theme, camera sensor selection, model detection threshold, and bilingual audio warnings.</p>
+    </div>
+
+    <div class="settings-grid">
+      <div class="glass-panel settings-card tech-corners">
+        <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 1.25rem;">Display & Appearance</h3>
+        <div class="setting-item-row">
+          <div class="setting-info"><div class="setting-title">Dark Mode Theme</div><div class="setting-desc">Cyber Dark mode with glassmorphism glows</div></div>
+          <label class="switch-label"><input type="checkbox" id="darkModeToggle" checked /><span class="slider-toggle"></span></label>
+        </div>
+        <div class="setting-item-row" style="flex-direction: column; align-items: flex-start; gap: 0.75rem;">
+          <div class="setting-info"><div class="setting-title">Camera Device Input</div><div class="setting-desc">Select active webcam or vehicle dashcam hardware</div></div>
+          <select id="cameraSelect" class="setting-select" style="width: 100%;">
+            <option value="default">Front Dashcam (Integrated WebCam)</option>
+            <option value="usb1">Secondary Road Sensor (USB Cam 02)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="glass-panel settings-card tech-corners">
+        <h3 style="color: #ffffff; font-size: 1.2rem; margin-bottom: 1.25rem;">Inference & Voice Alerts</h3>
+        <div class="setting-item-row" style="flex-direction: column; align-items: flex-start; gap: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+            <div class="setting-info"><div class="setting-title">Confidence Threshold Slider</div><div class="setting-desc">Minimum confidence percentage for bounding box trigger</div></div>
+            <span id="confSliderValueDisplay" style="font-family: var(--font-family-mono); font-size: 1.2rem; font-weight: 800; color: var(--accent-blue-primary);">75%</span>
+          </div>
+          <input type="range" id="confidenceThresholdSlider" class="range-slider-input" min="50" max="95" value="75" step="1" />
+        </div>
+        <div class="setting-item-row" style="flex-direction: column; align-items: flex-start; gap: 0.75rem;">
+          <div class="setting-info"><div class="setting-title">Voice Alert Language</div><div class="setting-desc">Bilingual speech synthesis engine (TTS)</div></div>
+          <select id="languageSelect" class="setting-select" style="width: 100%;">
+            <option value="en-IN">English (India) - Default</option>
+            <option value="hi-IN">Hindi (हिन्दी)</option>
+            <option value="mr-IN">Marathi (मराठी)</option>
+            <option value="ta-IN">Tamil (தமிழ்)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2.5rem; text-align: center;">
+      <button id="saveSettingsBtn" class="btn btn-primary-blue btn-lg ripple" style="min-width: 240px;">Save Settings</button>
+    </div>
+  </section>
+
+  <!-- CONTACT & API -->
+  <section id="contact" class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">Get In Touch</span></div>
+      <h2 class="section-title">Contact & <span class="text-gradient-blue">Integration</span></h2>
+      <p class="section-desc">Reach out for research collaboration, deployment licensing, or developer API keys.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="glass-panel contact-form-card">
+        <h3 style="color: #ffffff; margin-bottom: 1.25rem; font-size: 1.25rem;">Send Inquiry</h3>
+        <form id="contactForm" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent to the BharatSign AI team.');">
+          <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="e.g. Dr. Rajesh Sharma" required /></div>
+          <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="rajesh@iitb.ac.in" required /></div>
+          <div class="form-group"><label class="form-label">Message / API Key Request</label><textarea class="form-textarea" placeholder="Describe your deployment case..." required></textarea></div>
+          <button type="submit" class="btn btn-primary-blue btn-lg style-100" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+
+      <div id="api" class="api-card">
+        <div class="api-header">
+          <div class="code-tabs">
+            <button class="code-tab-btn active" data-lang="python">Python SDK</button>
+            <button class="code-tab-btn" data-lang="curl">REST API (cURL)</button>
+            <button class="code-tab-btn" data-lang="cpp">C++ TensorRT</button>
+          </div>
+          <button class="btn btn-glass btn-sm" id="copyCodeBtn">Copy Snippet</button>
+        </div>
+        <pre class="code-block" id="apiCodeDisplay"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div id="signModalBackdrop" class="modal-backdrop">
+    <div class="glass-panel-heavy modal-box">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">✕</button>
+      <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1.5rem;">
+        <div id="modalSignSvg" style="width: 90px; height: 90px;"></div>
+        <div>
+          <div id="modalSignCategory" class="badge badge-red">Mandatory</div>
+          <h2 id="modalSignTitle" style="color: #ffffff; font-size: 1.6rem;">Stop Sign</h2>
+          <div id="modalSignCode" style="font-family: var(--font-family-mono); color: var(--accent-blue-primary);">IRC:67-2012 (M-01)</div>
+        </div>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+        <h4 style="color: #ffffff; font-size: 0.95rem;">Regulatory Description</h4>
+        <p id="modalSignDesc" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Driver must bring vehicle to a complete halt.</p>
+        <h4 style="color: var(--accent-orange-bright); font-size: 0.95rem;">Recommended Driver Action</h4>
+        <p id="modalSignAction" style="font-size: 0.9rem; color: #f8fafc;">Bring vehicle to complete halt, observe both directions, proceed when clear.</p>
+      </div>
+      <div style="background: rgba(239, 68, 68, 0.12); padding: 1rem; border-radius: 10px; display: flex; justify-content: space-between;">
+        <div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Section</div>
+          <div id="modalMvActSection" style="color: #ffffff; font-weight: 700;">Section 177 MV Act</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Penalty</div>
+          <div id="modalFineAmount" style="color: #ef4444; font-weight: 800;">₹1,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 BharatSign AI System • Real-Time Computer Vision Platform for Indian Highways & Smart Cities.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/signs-db.js"></script>
+  <script src="js/voice-alerts.js"></script>
+  <script src="js/detection-engine.js"></script>
+  <script src="js/telemetry.js"></script>
+  <script src="js/api-viewer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

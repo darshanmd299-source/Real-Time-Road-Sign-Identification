@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Specifications | BharatSign AI</title>
+  <meta name="description" content="Deep Learning Neural Network Architecture & Hyperparameters for Indian Traffic Sign Identification." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/glassmorphism.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="../index.html" class="nav-logo">
+        <div class="nav-logo-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
+        <span>BharatSign<span style="color: var(--accent-orange-bright);">.AI</span></span>
+      </a>
+      <ul class="nav-links" id="navMenu">
+        <li><a href="../index.html#hero" class="nav-link">Home</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="dataset.html" class="nav-link">Dataset</a></li>
+        <li><a href="model-details.html" class="nav-link active">Model Details</a></li>
+        <li><a href="statistics.html" class="nav-link">Statistics</a></li>
+        <li><a href="about.html" class="nav-link">About Project</a></li>
+        <li><a href="settings.html" class="nav-link">Settings</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-actions"><a href="dashboard.html" class="btn btn-primary-orange btn-sm">Start Detection</a></div>
+    </div>
+  </header>
+
+  <section id="architecture" class="container" style="padding-top: 7rem; padding-bottom: 5rem;">
+    <div class="section-header">
+      <div class="section-tag"><span class="badge badge-blue">CNN Model Architecture</span></div>
+      <h2 class="section-title">Model Specifications & <span class="text-gradient-blue">Hyperparameters</span></h2>
+      <p class="section-desc">Comprehensive neural network architecture, dataset split, optimization hyper-parameters, and loss formulation.</p>
+    </div>
+
+    <div class="model-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 240, 255, 0.12); color: var(--accent-blue-primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📁</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Dataset Used</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">ITSRD Dataset</div>
+        <div style="font-size: 0.82rem; color: var(--accent-blue-primary);">Indian Traffic Sign Recognition Dataset</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 107, 0, 0.12); color: var(--accent-orange-bright); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🛑</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Number of Classes</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">48 Classes</div>
+        <div style="font-size: 0.82rem; color: var(--accent-orange-bright);">IRC:67-2012 Road Standards</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(52, 211, 153, 0.12); color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🧠</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Model Name</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">YOLOv8-ITSR</div>
+        <div style="font-size: 0.82rem; color: #34d399;">CNN MobileNetV3 Backbone</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 240, 255, 0.12); color: var(--accent-blue-primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🖼️</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Training Images</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">31,500 Images</div>
+        <div style="font-size: 0.82rem; color: var(--accent-blue-primary);">70% Train Split (Augmented)</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 107, 0, 0.12); color: var(--accent-orange-bright); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📊</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Validation Images</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">6,750 Images</div>
+        <div style="font-size: 0.82rem; color: var(--accent-orange-bright);">15% Validation Split</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(168, 85, 247, 0.12); color: #c084fc; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🧪</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Testing Images</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">6,750 Images</div>
+        <div style="font-size: 0.82rem; color: #c084fc;">15% Test Holdout Set</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(52, 211, 153, 0.12); color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">🔄</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Training Epochs</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">100 Epochs</div>
+        <div style="font-size: 0.82rem; color: #34d399;">Early Stopping at Epoch 82</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(0, 240, 255, 0.12); color: var(--accent-blue-primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📦</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Batch Size</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">32 Dynamic</div>
+        <div style="font-size: 0.82rem; color: var(--accent-blue-primary);">Mixed Precision FP16</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255, 107, 0, 0.12); color: var(--accent-orange-bright); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">⚡</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Optimizer</span></div>
+        <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">AdamW</div>
+        <div style="font-size: 0.82rem; color: var(--accent-orange-bright);">lr=0.001, weight_decay=0.01</div>
+      </div>
+      <div class="glass-panel model-spec-card tech-corners" style="padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;"><div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(239, 68, 68, 0.12); color: #ef4444; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📉</div><span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Loss Function</span></div>
+        <div style="font-size: 1.1rem; font-weight: 800; color: #ffffff; font-family: var(--font-family-mono);">Cross-Entropy + Focal Loss</div>
+        <div style="font-size: 0.82rem; color: #ef4444;">CIoU Bounding Box Loss</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 BharatSign AI System • Real-Time Computer Vision Platform for Indian Highways & Smart Cities.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>
