@@ -4,6 +4,12 @@ Thumbs.db
 *.tmp
 *.log
 
+# Python cache & venv
+__pycache__/
+*.pyc
+.venv/
+dataset_temp/
+
 # IDE files
 .vscode/
 .idea/

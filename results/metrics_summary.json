@@ -1,52 +1,52 @@
 {
-    "test_samples": 150,
-    "test_accuracy_pct": 99.33,
-    "test_loss": 0.0122,
-    "precision_macro_pct": 99.35,
-    "recall_macro_pct": 99.33,
-    "f1_score_macro_pct": 99.33,
+    "test_samples": 155,
+    "test_accuracy_pct": 90.97,
+    "test_loss": 0.507,
+    "precision_macro_pct": 91.16,
+    "recall_macro_pct": 90.97,
+    "f1_score_macro_pct": 90.74,
     "per_class_accuracy_pct": {
         "No_Entry": 100.0,
-        "No_Left_Turn": 96.67,
-        "No_Overtaking": 100.0,
-        "No_Parking": 100.0,
+        "No_Left_Turn": 74.19,
+        "No_Overtaking": 90.32,
+        "No_Parking": 90.32,
         "Road_Hump": 100.0
     },
     "confusion_matrix": [
         [
-            30,
+            31,
             0,
             0,
             0,
             0
         ],
         [
+            3,
+            23,
+            0,
+            4,
+            1
+        ],
+        [
+            0,
             1,
-            29,
+            28,
             0,
-            0,
-            0
+            2
         ],
         [
             0,
-            0,
-            30,
-            0,
-            0
-        ],
-        [
-            0,
-            0,
-            0,
-            30,
-            0
+            1,
+            1,
+            28,
+            1
         ],
         [
             0,
             0,
             0,
             0,
-            30
+            31
         ]
     ]
 }

@@ -17,7 +17,7 @@ CLASS_MAPPING = {
 IMG_SIZE = (64, 64)
 
 def ensure_dataset_structure(base_dir="d:/mproject/dataset"):
-    """Ensure dataset subfolders exist and populate realistic synthetic/augmented samples if empty."""
+    """Ensure dataset subfolders exist and populate synthetic samples only if completely empty."""
     os.makedirs(base_dir, exist_ok=True)
     
     for class_id, info in CLASS_MAPPING.items():
@@ -26,9 +26,9 @@ def ensure_dataset_structure(base_dir="d:/mproject/dataset"):
         
         # Check existing images
         existing = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
-        if len(existing) < 100:
-            print(f"Populating dataset samples for '{info['name']}' in {folder_path}...")
-            _generate_class_samples(class_id, folder_path, count=150)
+        if len(existing) == 0:
+            print(f"Populating default dataset samples for '{info['name']}' in {folder_path}...")
+            _generate_class_samples(class_id, folder_path, count=200)
 
 def _generate_class_samples(class_id: int, output_dir: str, count: int = 200):
     """Generate clean, highly distinctive annotated training images for each road sign class."""

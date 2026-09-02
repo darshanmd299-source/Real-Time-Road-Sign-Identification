@@ -47,13 +47,8 @@ def train_model():
     print("🚀 Starting BharatSign AI Model Training Pipeline")
     print("==========================================================================")
 
-    # 1. Regenerate & Load High-Quality Dataset (200 images / class = 1,000 total)
+    # 1. Load User Uploaded Real-World Dataset
     dataset_dir = "d:/mproject/dataset"
-    for c_id, info in CLASS_MAPPING.items():
-        folder = os.path.join(dataset_dir, info["folder"])
-        from training.preprocessing import _generate_class_samples
-        _generate_class_samples(c_id, folder, count=200)
-
     X, y, class_names, class_counts = load_and_preprocess_dataset(dataset_dir)
 
     print(f"\n📊 Dataset Distribution ({len(X)} Total Images):")
@@ -111,16 +106,23 @@ def train_model():
     labels_file = os.path.join(models_dir, "labels.json")
     meta_file = os.path.join(models_dir, "model_meta.json")
 
-    # Export labels mapping
+    # Export labels mapping cleanly by matching class name
+    from backend.config import DECISION_MAPPING
     label_map = {}
     for idx, name in enumerate(class_names):
-        info = CLASS_MAPPING.get(idx, {"action": "Caution", "instruction": "PROCEED WITH CAUTION", "target_speed": 40})
+        # Match class name (handling underscore vs space, e.g., 'No_Entry' vs 'No Entry')
+        clean_key = name.replace('_', ' ')
+        info = DECISION_MAPPING.get(clean_key, {
+            "action": "Proceed with Caution", 
+            "instruction": "CAUTION", 
+            "target_speed_kmh": 40
+        })
         label_map[str(idx)] = {
             "sign_id": idx,
             "class": name,
             "action": info["action"],
             "instruction": info["instruction"],
-            "target_speed": info["target_speed"]
+            "target_speed": info["target_speed_kmh"]
         }
 
     with open(labels_file, "w") as f:
