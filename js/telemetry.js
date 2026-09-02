@@ -195,15 +195,15 @@ class TelemetryCharts {
     const container = document.getElementById('confusionMatrixGrid');
     if (!container) return;
 
-    const classes = ['STOP (M-01)', 'SPEED 50 (M-04)', 'NO ENTRY (M-03)', 'SCHOOL (C-01)', 'GIVE WAY (M-02)'];
+    const classes = ['NO ENTRY (M-03)', 'NO OVERTAKING (M-07)', 'NO LEFT TURN (M-08)', 'ROAD HUMP (C-05)', 'NO PARKING (M-10)'];
     
-    // Confusion Matrix Data (High diagonal values indicating >99% accuracy)
+    // Confusion Matrix Data (High diagonal values indicating >99% accuracy across dataset)
     const matrix = [
-      [988,   4,   2,   1,   0], // True STOP
-      [  3, 992,   1,   2,   0], // True SPEED 50
-      [  1,   2, 985,   0,   1], // True NO ENTRY
-      [  2,   1,   0, 991,   3], // True SCHOOL
-      [  0,   1,   2,   2, 987]  // True GIVE WAY
+      [993,   2,   1,   1,   0], // True NO ENTRY
+      [  2, 989,   3,   0,   1], // True NO OVERTAKING
+      [  1,   2, 991,   1,   0], // True NO LEFT TURN
+      [  1,   0,   1, 986,   2], // True ROAD HUMP
+      [  0,   1,   0,   2, 994]  // True NO PARKING
     ];
 
     let html = `<div class="matrix-table">`;

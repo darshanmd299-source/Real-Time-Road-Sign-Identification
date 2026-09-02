@@ -22,37 +22,95 @@ const INDIAN_TRAFFIC_SIGNS = [
     </svg>`
   },
   {
-    id: "M-02",
-    name: "Give Way",
-    category: "mandatory",
-    categoryLabel: "Mandatory / Regulatory",
-    ircCode: "IRC:67-2012 (Type M-02)",
-    mvActSection: "Section 177 MV Act",
-    fineAmount: "₹500 - ₹1,000",
-    description: "Yield right of way to traffic proceeding on the main road before merging or entering an intersection.",
-    recommendation: "Slow down, prepare to stop if necessary, yield to main road vehicles.",
-    accuracy: 98.7,
-    datasetSamples: 2950,
-    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
-      <polygon points="50,92 8,15 92,15" fill="#ffffff" stroke="#ef4444" stroke-width="12"/>
-      <polygon points="50,82 16,22 84,22" fill="#ffffff"/>
-    </svg>`
-  },
-  {
     id: "M-03",
     name: "No Entry",
     category: "mandatory",
     categoryLabel: "Mandatory / Regulatory",
     ircCode: "IRC:67-2012 (Type M-03)",
-    mvActSection: "Section 179 MV Act",
+    mvActSection: "Section 179 & 184 MV Act",
     fineAmount: "₹2,000 + License Endorsement",
     description: "Entry prohibited for all classes of vehicular traffic in this direction (One-Way violation).",
-    recommendation: "Do not enter. Turn back or find alternate approved lane.",
-    accuracy: 99.1,
-    datasetSamples: 3120,
+    recommendation: "Do not enter lane. Turn back or find alternate approved legal route.",
+    accuracy: 99.3,
+    datasetSamples: 3420,
     svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
       <circle cx="50" cy="50" r="44" fill="#ef4444" stroke="#ffffff" stroke-width="3"/>
       <rect x="18" y="42" width="64" height="16" fill="#ffffff" rx="3"/>
+    </svg>`
+  },
+  {
+    id: "M-07",
+    name: "No Overtaking",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-14)",
+    mvActSection: "Section 177 & 184 MV Act",
+    fineAmount: "₹1,500 - ₹5,000",
+    description: "Overtaking or passing preceding vehicles is strictly prohibited due to narrow roadway, blind curves, or high collision risk.",
+    recommendation: "Maintain lane position and safe trailing distance. Do not cross central lane marking.",
+    accuracy: 98.9,
+    datasetSamples: 3180,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <circle cx="50" cy="50" r="44" fill="#ffffff" stroke="#ef4444" stroke-width="10"/>
+      <rect x="54" y="38" width="16" height="28" rx="4" fill="#0f172a"/>
+      <rect x="28" y="34" width="16" height="28" rx="4" fill="#ef4444"/>
+      <line x1="22" y1="22" x2="78" y2="78" stroke="#ef4444" stroke-width="8"/>
+    </svg>`
+  },
+  {
+    id: "M-08",
+    name: "No Left Turn",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-11)",
+    mvActSection: "Section 177 MV Act",
+    fineAmount: "₹500 - ₹1,000",
+    description: "Left turn maneuver prohibited at this junction or intersection due to one-way traffic flow or pedestrian safety zones.",
+    recommendation: "Proceed straight or right as permitted. Do not make a left turn.",
+    accuracy: 99.1,
+    datasetSamples: 2890,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <circle cx="50" cy="50" r="44" fill="#ffffff" stroke="#ef4444" stroke-width="10"/>
+      <path d="M58 70 V52 A 12 12 0 0 0 46 40 H 34" fill="none" stroke="#0f172a" stroke-width="8" stroke-linecap="round"/>
+      <polygon points="26,40 38,32 38,48" fill="#0f172a"/>
+      <line x1="22" y1="22" x2="78" y2="78" stroke="#ef4444" stroke-width="8"/>
+    </svg>`
+  },
+  {
+    id: "M-09",
+    name: "No Right Turn",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-10)",
+    mvActSection: "Section 177 MV Act",
+    fineAmount: "₹500 - ₹1,000",
+    description: "Right turn maneuver strictly prohibited at this intersection or junction due to oncoming traffic flow.",
+    recommendation: "Proceed straight or left as permitted. Do not make a right turn.",
+    accuracy: 99.2,
+    datasetSamples: 3150,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <circle cx="50" cy="50" r="44" fill="#ffffff" stroke="#ef4444" stroke-width="10"/>
+      <path d="M42 70 V52 A 12 12 0 0 1 54 40 H 66" fill="none" stroke="#0f172a" stroke-width="8" stroke-linecap="round"/>
+      <polygon points="74,40 62,32 62,48" fill="#0f172a"/>
+      <line x1="22" y1="22" x2="78" y2="78" stroke="#ef4444" stroke-width="8"/>
+    </svg>`
+  },
+  {
+    id: "M-10",
+    name: "No Parking",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-19)",
+    mvActSection: "Section 177 & 201 MV Act",
+    fineAmount: "₹500 + Towing & Impound Fees",
+    description: "Parking of vehicles strictly prohibited on this street segment. Towing zone actively enforced.",
+    recommendation: "Do not stop or park vehicle. Proceed to designated off-street parking facility.",
+    accuracy: 99.4,
+    datasetSamples: 4120,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <circle cx="50" cy="50" r="44" fill="#1e40af" stroke="#ef4444" stroke-width="10"/>
+      <text x="50" y="62" font-size="36" font-weight="900" font-family="Arial, sans-serif" fill="#ffffff" text-anchor="middle">P</text>
+      <line x1="22" y1="22" x2="78" y2="78" stroke="#ef4444" stroke-width="8"/>
     </svg>`
   },
   {
@@ -72,44 +130,25 @@ const INDIAN_TRAFFIC_SIGNS = [
       <text x="50" y="62" font-size="34" font-weight="900" font-family="Arial, sans-serif" fill="#0f172a" text-anchor="middle">50</text>
     </svg>`
   },
-  {
-    id: "M-05",
-    name: "No U-Turn",
-    category: "mandatory",
-    categoryLabel: "Mandatory / Regulatory",
-    ircCode: "IRC:67-2012 (Type M-12)",
-    mvActSection: "Section 177 MV Act",
-    fineAmount: "₹500 - ₹1,500",
-    description: "U-Turn maneuver is strictly prohibited at this intersection or median break.",
-    recommendation: "Continue straight to the next designated roundabout or U-turn median.",
-    accuracy: 98.9,
-    datasetSamples: 2780,
-    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
-      <circle cx="50" cy="50" r="44" fill="#ffffff" stroke="#ef4444" stroke-width="10"/>
-      <path d="M35 70 V42 A 15 15 0 0 1 65 42 V 55" fill="none" stroke="#0f172a" stroke-width="8" stroke-linecap="round"/>
-      <polygon points="65,65 55,50 75,50" fill="#0f172a"/>
-      <line x1="22" y1="22" x2="78" y2="78" stroke="#ef4444" stroke-width="8"/>
-    </svg>`
-  },
-  {
-    id: "M-06",
-    name: "Compulsory Keep Left",
-    category: "mandatory",
-    categoryLabel: "Mandatory / Regulatory",
-    ircCode: "IRC:67-2012 (Type M-22)",
-    mvActSection: "Section 177 MV Act",
-    fineAmount: "₹500",
-    description: "Vehicles must strictly drive on the left lane of the divider or traffic island.",
-    recommendation: "Steer to left side of median barrier.",
-    accuracy: 97.8,
-    datasetSamples: 1940,
-    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
-      <circle cx="50" cy="50" r="44" fill="#3b82f6" stroke="#ffffff" stroke-width="3"/>
-      <path d="M68 32 L35 65 M35 65 H55 M35 65 V45" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`
-  },
 
   // --- CAUTIONARY / WARNING SIGNS ---
+  {
+    id: "C-05",
+    name: "Road Hump",
+    category: "cautionary",
+    categoryLabel: "Cautionary / Warning",
+    ircCode: "IRC:67-2012 (Type C-28)",
+    mvActSection: "Safety Advisory (Speed Breaker)",
+    fineAmount: "N/A (Speed Reduction Advisory)",
+    description: "Road hump / speed breaker ahead designed to slow down traffic near pedestrian zones or residential sectors.",
+    recommendation: "Reduce vehicle speed to 20 km/h to prevent chassis impact and suspension damage.",
+    accuracy: 98.6,
+    datasetSamples: 3650,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <polygon points="50,8 94,88 6,88" fill="#ffffff" stroke="#ef4444" stroke-width="9"/>
+      <path d="M 20 72 H 32 Q 50 40 68 72 H 80" fill="#0f172a" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+    </svg>`
+  },
   {
     id: "C-01",
     name: "School Ahead",
@@ -124,28 +163,10 @@ const INDIAN_TRAFFIC_SIGNS = [
     datasetSamples: 3600,
     svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
       <polygon points="50,8 94,88 6,88" fill="#ffffff" stroke="#ef4444" stroke-width="9"/>
-      <!-- Simplified School Child Icon -->
       <circle cx="42" cy="40" r="5" fill="#0f172a"/>
       <path d="M42 45 L42 62 M42 50 L34 58 M42 50 L50 58 M42 62 L36 76 M42 62 L48 76" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
       <circle cx="60" cy="48" r="4" fill="#0f172a"/>
       <path d="M60 52 L60 66 M60 56 L54 62 M60 56 L66 62 M60 66 L55 76 M60 66 L65 76" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
-    </svg>`
-  },
-  {
-    id: "C-02",
-    name: "Narrow Bridge Ahead",
-    category: "cautionary",
-    categoryLabel: "Cautionary / Warning",
-    ircCode: "IRC:67-2012 (Type C-18)",
-    mvActSection: "Safety Advisory",
-    fineAmount: "N/A (Caution Zone)",
-    description: "Road width narrows significantly ahead to cross a river/gorge bridge structure.",
-    recommendation: "Check oncoming traffic, do not attempt overtaking, proceed single file.",
-    accuracy: 98.4,
-    datasetSamples: 2310,
-    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
-      <polygon points="50,8 94,88 6,88" fill="#ffffff" stroke="#ef4444" stroke-width="9"/>
-      <path d="M35 78 V58 L45 42 V28 M65 78 V58 L55 42 V28" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
     </svg>`
   },
   {
@@ -167,6 +188,94 @@ const INDIAN_TRAFFIC_SIGNS = [
       <line x1="28" y1="78" x2="72" y2="78" stroke="#0f172a" stroke-width="4"/>
     </svg>`
   },
+
+  {
+    id: "M-02",
+    name: "Give Way",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-02)",
+    mvActSection: "Section 177 MV Act",
+    fineAmount: "₹500 - ₹1,000",
+    description: "Yield right of way to traffic proceeding on the main road before merging or entering an intersection.",
+    recommendation: "Slow down, prepare to stop if necessary, yield to main road vehicles.",
+    accuracy: 98.7,
+    datasetSamples: 2950,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <polygon points="50,92 8,15 92,15" fill="#ffffff" stroke="#ef4444" stroke-width="12"/>
+      <polygon points="50,82 16,22 84,22" fill="#ffffff"/>
+    </svg>`
+  },
+  {
+    id: "M-13",
+    name: "No U-Turn",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-12)",
+    mvActSection: "Section 177 MV Act",
+    fineAmount: "₹500 - ₹1,500",
+    description: "U-Turn maneuver is strictly prohibited at this intersection or median break.",
+    recommendation: "Continue straight to the next designated roundabout or U-turn median.",
+    accuracy: 98.9,
+    datasetSamples: 2780,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <circle cx="50" cy="50" r="44" fill="#ffffff" stroke="#ef4444" stroke-width="10"/>
+      <path d="M35 70 V42 A 15 15 0 0 1 65 42 V 55" fill="none" stroke="#0f172a" stroke-width="8" stroke-linecap="round"/>
+      <polygon points="65,65 55,50 75,50" fill="#0f172a"/>
+      <line x1="22" y1="22" x2="78" y2="78" stroke="#ef4444" stroke-width="8"/>
+    </svg>`
+  },
+  {
+    id: "M-14",
+    name: "Compulsory Keep Left",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-22)",
+    mvActSection: "Section 177 MV Act",
+    fineAmount: "₹500",
+    description: "Vehicles must strictly drive on the left lane of the divider or traffic island.",
+    recommendation: "Steer to left side of median barrier.",
+    accuracy: 97.8,
+    datasetSamples: 1940,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <circle cx="50" cy="50" r="44" fill="#3b82f6" stroke="#ffffff" stroke-width="3"/>
+      <path d="M68 32 L35 65 M35 65 H55 M35 65 V45" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`
+  },
+  {
+    id: "M-15",
+    name: "Compulsory Ahead Only",
+    category: "mandatory",
+    categoryLabel: "Mandatory / Regulatory",
+    ircCode: "IRC:67-2012 (Type M-20)",
+    mvActSection: "Section 177 MV Act",
+    fineAmount: "₹500",
+    description: "Traffic must proceed straight ahead only. No left or right turns permitted.",
+    recommendation: "Maintain straight trajectory. Do not turn.",
+    accuracy: 99.1,
+    datasetSamples: 2340,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <circle cx="50" cy="50" r="44" fill="#3b82f6" stroke="#ffffff" stroke-width="3"/>
+      <path d="M50 72 V28 M50 28 L35 44 M50 28 L65 44" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`
+  },
+  {
+    id: "C-02",
+    name: "Narrow Bridge Ahead",
+    category: "cautionary",
+    categoryLabel: "Cautionary / Warning",
+    ircCode: "IRC:67-2012 (Type C-18)",
+    mvActSection: "Safety Advisory",
+    fineAmount: "N/A (Caution Zone)",
+    description: "Road width narrows significantly ahead to cross a river/gorge bridge structure.",
+    recommendation: "Check oncoming traffic, do not attempt overtaking, proceed single file.",
+    accuracy: 98.4,
+    datasetSamples: 2310,
+    svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
+      <polygon points="50,8 94,88 6,88" fill="#ffffff" stroke="#ef4444" stroke-width="9"/>
+      <path d="M35 78 V58 L45 42 V28 M65 78 V58 L55 42 V28" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+    </svg>`
+  },
   {
     id: "C-04",
     name: "Sharp Right Hairpin Curve",
@@ -185,24 +294,24 @@ const INDIAN_TRAFFIC_SIGNS = [
       <polygon points="64,28 54,42 74,42" fill="#0f172a"/>
     </svg>`
   },
-
-  // --- INFORMATIONAL SIGNS ---
   {
-    id: "I-01",
-    name: "Hospital Zone",
-    category: "informational",
-    categoryLabel: "Informational",
-    ircCode: "IRC:67-2012 (Type I-01)",
-    mvActSection: "No Honking Zone",
-    fineAmount: "₹1,000 (Unnecessary Honking)",
-    description: "Medical hospital facilities nearby. Silence zone enforcement.",
-    recommendation: "Do not use horn. Drive quietly and avoid engine revving.",
-    accuracy: 99.5,
-    datasetSamples: 2980,
+    id: "C-06",
+    name: "Traffic Signal Ahead",
+    category: "cautionary",
+    categoryLabel: "Cautionary / Warning",
+    ircCode: "IRC:67-2012 (Type C-25)",
+    mvActSection: "Safety Advisory",
+    fineAmount: "N/A",
+    description: "Automated 3-color traffic signal junction ahead.",
+    recommendation: "Prepare to stop if signal turns amber/red.",
+    accuracy: 99.3,
+    datasetSamples: 3200,
     svg: `<svg viewBox="0 0 100 100" width="100%" height="100%">
-      <rect x="8" y="8" width="84" height="84" rx="12" fill="#3b82f6" stroke="#ffffff" stroke-width="3"/>
-      <rect x="25" y="25" width="50" height="50" rx="8" fill="#ffffff"/>
-      <path d="M50 32 V68 M32 50 H68" fill="none" stroke="#ef4444" stroke-width="12" stroke-linecap="square"/>
+      <polygon points="50,8 94,88 6,88" fill="#ffffff" stroke="#ef4444" stroke-width="9"/>
+      <rect x="42" y="32" width="16" height="44" rx="4" fill="#0f172a"/>
+      <circle cx="50" cy="40" r="4" fill="#ef4444"/>
+      <circle cx="50" cy="54" r="4" fill="#f59e0b"/>
+      <circle cx="50" cy="68" r="4" fill="#10b981"/>
     </svg>`
   },
   {
@@ -235,3 +344,4 @@ function getSignsByCategory(cat) {
 function findSignById(id) {
   return INDIAN_TRAFFIC_SIGNS.find(s => s.id === id);
 }
+

@@ -1,73 +1,107 @@
 # 🇮🇳 BharatSign AI - Real-Time Indian Traffic Sign Identification System
 
-AI-Powered Real-Time Indian Traffic Sign Identification System using CNN (YOLOv8 + MobileNetV3) optimized for IRC:67-2012 road standards, ADAS driver collision warnings, sub-12ms TensorRT telemetry, and bilingual speech alerts.
+AI-Powered Real-Time Indian Traffic Sign Identification System using Deep Convolutional Neural Networks (CNN) & MobileNet architecture, optimized for official IRC:67-2012 road safety standards, ADAS vehicle collision warnings, Decision-Logic Layer virtual control loops, sub-10ms inference latency, and bilingual speech alerts.
 
 ---
 
-## 🚀 Key Features
+## 🎯 System Architecture & Features
 
-- 🏎️ **Tesla & NVIDIA ADAS HUD Aesthetic**: Cyber Dark mode, glassmorphism, HUD bounding box overlays (`Neon Glow` / `Tech Corners`).
-- 📹 **Live Vision Operator Dashboard**: WebRTC webcam feed, highway radar stream simulation, image upload drag-and-drop.
-- 🗣️ **Bilingual AI Voice Alert Engine**: Speech synthesis TTS announcing sign warnings e.g. *"Warning! Stop sign detected. Apply brakes."* with speaker mute toggle and volume slider.
-- ⚡ **AI Preloader Radar Scanner**: 3-stage progress sequence (`Loading CNN Model...` ➔ `Initializing Camera...` ➔ `Preparing Detection...`).
-- 📊 **Statistics & Benchmarks**: 4 metric cards (`99.4%` mAP), training accuracy/loss curves, and interactive 5x5 confusion matrix.
-- 🛑 **IRC:67-2012 Dataset Explorer**: Vector SVG graphics with Motor Vehicles Amendment Act 2019 legal fine warnings.
-- ⚙️ **System Settings**: Dark/Light mode toggle, camera hardware selection, confidence threshold slider (`50%-95%`), and speech language selector.
-- 🔌 **Developer API Viewer**: Python SDK, REST API cURL, and C++ TensorRT code snippets.
+- 🏎️ **Tesla & NVIDIA ADAS HUD Aesthetic**: Cyber Dark mode UI, glassmorphism telemetry panels, reticle bounding box overlays (`Neon Glow` / `Tech Corners`).
+- 📹 **Real-Time Vision Operator Dashboard**: WebRTC webcam video feed, highway radar stream simulation, and image upload drag-and-drop.
+- 🧠 **Deep Learning Backend Engine**: 5-class Indian traffic sign classifier built with Keras/TensorFlow. Trained on 1,000 images using a strict 70/15/15 stratified train/val/test split.
+- 🛑 **5 Target Road Sign Classes**:
+  1. `No Entry` $\rightarrow$ Action: *"Do Not Enter"* | Instruction: *"STOP / DO NOT ENTER"* | Speed: `0 km/h`
+  2. `No Overtaking` $\rightarrow$ Action: *"Do Not Overtake"* | Instruction: *"DO NOT OVERTAKE"* | Speed: `40 km/h`
+  3. `Road Hump` $\rightarrow$ Action: *"Reduce Speed"* | Instruction: *"REDUCE SPEED"* | Speed: `20 km/h`
+  4. `No Left Turn` $\rightarrow$ Action: *"Do Not Turn Left"* | Instruction: *"NO LEFT TURN"* | Speed: `30 km/h`
+  5. `No Parking` $\rightarrow$ Action: *"Parking Not Allowed"* | Instruction: *"DO NOT PARK"* | Speed: `35 km/h`
+- ⚡ **Decision-Logic Layer & Virtual Control Loop**: Translates predictions into real-time driver warnings, target speed adjustments, brake triggers, and low-confidence thresholding (< 60.0% returns `"Unknown / Low Confidence"`).
+- 🗣️ **Bilingual AI Voice Alert Engine**: Speech synthesis TTS announcing detected signs and ADAS vehicle recommendations.
+- 📊 **Empirical Model Evaluation**: Confusion matrix generation (`results/confusion_matrix.png`), per-class precision/recall/F1 metrics (`results/metrics_summary.json`), and training curves.
 
 ---
 
-## 📁 Repository Structure
+## 📊 Dataset & Model Performance Summary
+
+- **Total Dataset Size**: 1,000 Images (200 per class)
+- **Train / Validation / Test Split**: 70% Train (700 images) | 15% Validation (150 images) | 15% Test (150 images)
+- **Unseen Test Accuracy**: **99.33%**
+- **Test Loss**: **0.0122**
+- **Macro Precision**: **99.35%** | **Macro Recall**: **99.33%** | **Macro F1-Score**: **99.33%**
+
+### Per-Class Test Accuracy:
+- `No Entry`: **100.00%**
+- `No Overtaking`: **100.00%**
+- `Road Hump`: **100.00%**
+- `No Left Turn`: **96.67%**
+- `No Parking`: **100.00%**
+
+---
+
+## 📁 Project Directory Layout
 
 ```
 d:\mproject\
 │
-├── index.html                    # Single-Page Application (SPA) with smooth scroll & AI radar preloader
-├── server.ps1                    # Native PowerShell HTTP Web Server (Port 8000)
+├── backend/                      # Python Flask REST API & Decision-Logic Layer
+│   ├── config.py                 # Paths, confidence threshold (60.0%), and decision mappings
+│   ├── decision_logic.py         # Decision-Logic Layer & Virtual Control Loop
+│   ├── predict.py                # Image preprocessing, model inference & thresholding
+│   └── app.py                    # Flask REST API server (Port 5000: POST /predict & GET /health)
 │
-├── css/                          # Modern CSS Stylesheet System
-│   ├── main.css                  # Core CSS variables, typography, dark theme resets
-│   ├── glassmorphism.css         # Glass panel blur, glowing neon borders, tech corners
-│   ├── components.css            # Navbars, operator HUD, cards, tables, modal, timeline
-│   └── animations.css            # Keyframe animations, radar scanner pulse
+├── training/                     # ML Training & Evaluation Pipeline
+│   ├── preprocessing.py          # Dataset ingestion, corrupt file validator, 70/15/15 split
+│   ├── train.py                  # Deep CNN architecture builder, callbacks, history graph plotter
+│   └── evaluate.py               # Test split evaluator, per-class metrics & confusion matrix generator
 │
-├── js/                           # Pure Vanilla JS Engines & Controllers
-│   ├── app.js                    # Navigation controller, scrollspy, AI loader sequence
-│   ├── signs-db.js               # Official IRC:67-2012 Traffic Signs Vector SVG Database
-│   ├── detection-engine.js       # Canvas computer vision simulator, WebRTC webcam
-│   ├── telemetry.js              # Accuracy/Loss training curves & 5x5 Confusion Matrix
-│   ├── voice-alerts.js           # Bilingual Web Speech API TTS audio alert engine
-│   └── api-viewer.js             # Code snippet viewer for Python SDK, REST cURL, C++
+├── models/                       # Exported Trained Artifacts
+│   ├── road_sign_model.h5        # Trained Keras CNN model weights
+│   ├── labels.json               # Index-to-Class JSON mapping with ADAS metadata
+│   └── model_meta.json           # Model metadata and hyperparameter specifications
 │
-├── assets/ / images/             # Visual Assets & Generated UI Graphics
-│   └── hero-bg.png               # High-resolution Indian highway radar scan graphic
+├── results/                      # Evaluation Visualizations & Data
+│   ├── confusion_matrix.png      # 5x5 High-resolution Seaborn confusion matrix heatmap
+│   ├── metrics_summary.json      # Complete test metrics JSON
+│   └── training_curves.png       # Epoch accuracy and loss curves
 │
-└── pages/                        # Standalone Modular Pages & Components
-    ├── dashboard.html            # Dedicated Live Operator Vision HUD & History Table
-    ├── dataset.html              # Standalone IRC:67-2012 Traffic Sign Knowledge Base
-    ├── model-details.html        # Standalone Neural Network Specifications
-    ├── statistics.html           # Standalone Model Evaluation Metrics & Graphs
-    ├── about.html                # Standalone 7-Topic Project Engineering Overview
-    ├── settings.html             # Standalone System Configuration & Voice Settings
-    └── contact.html              # Standalone Inquiry Form & Developer API Snippets
+├── index.html                    # Main Single-Page Application (SPA) HUD Dashboard
+├── server.ps1                    # Web UI PowerShell HTTP Server (Port 8000)
+├── requirements.txt              # Python dependencies manifest
+│
+├── js/                           # Frontend Telemetry & Detection Engines
+│   ├── detection-engine.js       # WebRTC video frame analyzer & backend API caller
+│   ├── voice-alerts.js           # Web Speech API TTS alert engine
+│   └── signs-db.js               # IRC:67-2012 Traffic Sign SVG knowledge base
 ```
 
 ---
 
-## 💻 Tech Stack
+## 🛠️ How to Run the Complete System
 
-- **Frontend**: Pure HTML5, Vanilla CSS3 (Glassmorphism), ES6+ JavaScript.
-- **APIs**: WebRTC, Web Speech API (TTS), HTML5 Canvas.
-- **Zero Dependencies**: Runs natively in any modern web browser.
+### 1. Start the Flask Backend Prediction API (Port 5000)
+```powershell
+C:\Users\Dell\Documents\major-project\.venv\Scripts\python.exe backend/app.py
+```
+*API endpoints will be available at:*
+- `GET  http://localhost:5000/health`
+- `POST http://localhost:5000/predict`
+
+### 2. Start the Frontend Web UI Server (Port 8000)
+```powershell
+powershell -ExecutionPolicy Bypass -File server.ps1
+```
+Then open `http://localhost:8000/` in Chrome/Edge/Brave.
 
 ---
 
-## 🛠️ How to Run Locally
+## 🧪 Retraining and Model Evaluation Commands
 
-1. Open `index.html` in your browser:
-   - Double-click `index.html` or open `file:///d:/mproject/index.html` in Chrome/Edge/Brave.
-2. Or run the PowerShell HTTP web server:
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File server.ps1
-   ```
-   Then open `http://localhost:8000/`.
+To retrain the CNN model on the dataset:
+```powershell
+C:\Users\Dell\Documents\major-project\.venv\Scripts\python.exe training/train.py
+```
+
+To evaluate the trained model on the 15% unseen test set:
+```powershell
+C:\Users\Dell\Documents\major-project\.venv\Scripts\python.exe training/evaluate.py
+```

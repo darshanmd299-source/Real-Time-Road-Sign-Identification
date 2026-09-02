@@ -46,27 +46,49 @@ class VoiceAlertEngine {
   generateCustomAlertMessage(signName) {
     const sName = signName.toLowerCase();
 
-    if (sName.includes('stop')) {
-      return "Warning! Stop sign detected. Apply brakes.";
+    if (sName.includes('no entry')) {
+      return "Warning! No Entry sign ahead. Do not proceed in this direction.";
+    } else if (sName.includes('no overtaking') || sName.includes('overtaking')) {
+      return "Warning! No Overtaking zone. Do not attempt to pass vehicles.";
+    } else if (sName.includes('no left turn')) {
+      return "Caution! No Left Turn permitted at this junction.";
+    } else if (sName.includes('no right turn')) {
+      return "Caution! No Right Turn permitted at this junction.";
+    } else if (sName.includes('no u-turn') || sName.includes('u-turn')) {
+      return "Warning! No U-Turn permitted here.";
+    } else if (sName.includes('road hump') || sName.includes('hump') || sName.includes('speed breaker')) {
+      return "Caution! Road Hump ahead. Reduce speed to 20 kilometers per hour.";
+    } else if (sName.includes('no parking') || sName.includes('parking prohibited')) {
+      return "Notice! No Parking zone. Towing enforced.";
+    } else if (sName.includes('stop')) {
+      return "Warning! Stop sign detected. Apply brakes immediately.";
+    } else if (sName.includes('give way') || sName.includes('yield')) {
+      return "Yield! Give Way sign detected. Prepare to yield right-of-way.";
     } else if (sName.includes('speed limit')) {
       const match = signName.match(/\d+/);
-      const limit = match ? match[0] : '40';
-      return `Speed Limit ${limit} detected. Reduce speed.`;
-    } else if (sName.includes('no entry')) {
-      return "Warning! No Entry sign ahead.";
-    } else if (sName.includes('left turn') || sName.includes('turn left')) {
-      return "Turn Left ahead.";
-    } else if (sName.includes('right turn') || sName.includes('turn right')) {
-      return "Turn Right ahead.";
+      const limit = match ? match[0] : '50';
+      return `Speed Limit ${limit} kilometers per hour detected. Maintain safe speed.`;
+    } else if (sName.includes('school')) {
+      return "Caution! School Zone ahead. Slow down and watch for children.";
     } else if (sName.includes('pedestrian')) {
       return "Caution! Pedestrian Crossing ahead.";
-    } else if (sName.includes('school')) {
-      return "Caution! School Zone ahead. Slow down.";
-    } else if (sName.includes('give way')) {
-      return "Yield! Give Way sign detected.";
+    } else if (sName.includes('traffic signal') || sName.includes('signal')) {
+      return "Caution! Automated Traffic Signal Junction ahead.";
+    } else if (sName.includes('keep left')) {
+      return "Notice! Compulsory Keep Left lane.";
+    } else if (sName.includes('ahead only') || sName.includes('compulsory ahead')) {
+      return "Notice! Compulsory Ahead Only lane.";
+    } else if (sName.includes('hospital')) {
+      return "Informational! Hospital Zone ahead. Silence zone enforced.";
+    } else if (sName.includes('fuel') || sName.includes('petrol')) {
+      return "Informational! Fuel station ahead on service lane.";
+    } else if (sName.includes('bridge') || sName.includes('narrow')) {
+      return "Caution! Narrow Bridge ahead. Proceed single file.";
+    } else if (sName.includes('hairpin') || sName.includes('curve')) {
+      return "Caution! Sharp Hairpin Curve ahead. Sound horn before turn.";
     }
 
-    return `${signName} detected ahead.`;
+    return `${signName} detected ahead. Exercise caution.`;
   }
 
   speakSignAlert(signName, recommendation = '') {

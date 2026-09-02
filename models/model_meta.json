@@ -1,0 +1,21 @@
+{
+    "model_name": "BharatSign_CNN_v1",
+    "input_shape": [
+        64,
+        64,
+        3
+    ],
+    "num_classes": 5,
+    "class_names": [
+        "No_Entry",
+        "No_Left_Turn",
+        "No_Overtaking",
+        "No_Parking",
+        "Road_Hump"
+    ],
+    "total_images": 1000,
+    "train_samples": 700,
+    "val_samples": 150,
+    "test_samples": 150,
+    "confidence_threshold": 60.0
+}

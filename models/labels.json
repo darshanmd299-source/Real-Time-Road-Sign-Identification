@@ -1,0 +1,37 @@
+{
+    "0": {
+        "sign_id": 0,
+        "class": "No_Entry",
+        "action": "Do Not Enter",
+        "instruction": "STOP / DO NOT ENTER",
+        "target_speed": 0
+    },
+    "1": {
+        "sign_id": 1,
+        "class": "No_Left_Turn",
+        "action": "Do Not Overtake",
+        "instruction": "DO NOT OVERTAKE",
+        "target_speed": 40
+    },
+    "2": {
+        "sign_id": 2,
+        "class": "No_Overtaking",
+        "action": "Reduce Speed",
+        "instruction": "REDUCE SPEED",
+        "target_speed": 20
+    },
+    "3": {
+        "sign_id": 3,
+        "class": "No_Parking",
+        "action": "Do Not Turn Left",
+        "instruction": "NO LEFT TURN",
+        "target_speed": 30
+    },
+    "4": {
+        "sign_id": 4,
+        "class": "Road_Hump",
+        "action": "Parking Not Allowed",
+        "instruction": "DO NOT PARK",
+        "target_speed": 35
+    }
+}

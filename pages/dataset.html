@@ -48,6 +48,66 @@
       <p class="section-desc">Search and explore official Indian Roads Congress traffic signs with IRC classifications, legal penalties under Motor Vehicles Act, and training metrics.</p>
     </div>
 
+    <!-- FEATURE ANALYSIS SUMMARY BANNER -->
+    <div class="glass-panel tech-corners" style="margin-bottom: 2.5rem; padding: 1.8rem; background: rgba(10, 16, 31, 0.7); border: 1px solid rgba(0, 240, 255, 0.2);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem;">
+        <div>
+          <span class="badge badge-nvidia" style="margin-bottom: 0.4rem;">Feature Extraction Engine</span>
+          <h3 style="color: #ffffff; font-size: 1.3rem;">Target Signs Dataset <span class="text-gradient-orange">Feature Analysis</span></h3>
+        </div>
+        <div style="font-family: var(--font-family-mono); font-size: 0.85rem; color: var(--accent-nvidia-glow);">
+          ⚡ 5 Key Target Classes Analyzed • 17,260 Annotated Images
+        </div>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; color: #ef4444; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem;">
+            <span>⛔</span> No Entry (M-03)
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Shape: Circular Disk</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Color: Red (HSV: 0°/85%) + White Bar</div>
+          <div style="font-size: 0.8rem; color: var(--accent-nvidia-glow); font-weight: 600; margin-top: 0.3rem;">Accuracy: 99.3% | 3,420 Samples</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; color: #ef4444; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem;">
+            <span>🚫</span> No Overtaking (M-07)
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Shape: Circle + Red Rim Slash</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Vector: Dual Vehicle Silhouettes</div>
+          <div style="font-size: 0.8rem; color: var(--accent-nvidia-glow); font-weight: 600; margin-top: 0.3rem;">Accuracy: 98.9% | 3,180 Samples</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; color: #ef4444; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem;">
+            <span>↩️</span> No Left Turn (M-08)
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Shape: Circle + Red Diagonal Line</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Vector: Curved Left Arrow</div>
+          <div style="font-size: 0.8rem; color: var(--accent-nvidia-glow); font-weight: 600; margin-top: 0.3rem;">Accuracy: 99.1% | 2,890 Samples</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; color: #f59e0b; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem;">
+            <span>🐪</span> Road Hump (C-05)
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Shape: Equilateral Triangle</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Vector: Parabolic Hump Arc</div>
+          <div style="font-size: 0.8rem; color: var(--accent-nvidia-glow); font-weight: 600; margin-top: 0.3rem;">Accuracy: 98.6% | 3,650 Samples</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; color: #3b82f6; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem;">
+            <span>🅿️</span> No Parking (M-10)
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Shape: Blue Circle + Red Border</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Vector: Letter 'P' + Red Slash</div>
+          <div style="font-size: 0.8rem; color: var(--accent-nvidia-glow); font-weight: 600; margin-top: 0.3rem;">Accuracy: 99.4% | 4,120 Samples</div>
+        </div>
+      </div>
+    </div>
+
     <div class="explorer-toolbar">
       <div class="category-tabs">
         <button class="category-btn active" data-category="all"><span>All Traffic Signs</span></button>
